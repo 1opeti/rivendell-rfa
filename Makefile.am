@@ -36,6 +36,11 @@ SUBDIRS = icons helpers toolame $(HPI_RD_OPT) lib rlm scripts cae conf docs \
           rdlogedit rdlogmanager rdpanel rdairplay rdcastmanager utils web \
           tests importers $(PAM_RD_OPT)
 
+ACLOCAL_AMFLAGS = -I m4
+
+maintainer-clean-local:	
+	rm -rf m4
+
 install-exec-local:	
 	./install-init.sh $(DESTDIR)$(prefix)
 

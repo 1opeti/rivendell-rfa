@@ -1,0 +1,13 @@
+*~
+*.o
+autom4te.cache
+config.guess
+config.log
+config.sub
+configure
+depcomp
+ltmain.sh
+m4
+Makefile
+Makefile.in
+missing

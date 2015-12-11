@@ -22,9 +22,11 @@ dnl   License along with this program; if not, write to the Free Software
 dnl   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 dnl
 
-AC_INIT(rivendell,`cat PACKAGE_VERSION`,Fred Gleason <fredg@paravelsystems.com>)
-AM_INIT_AUTOMAKE(rivendell,`cat PACKAGE_VERSION`)
+AC_INIT([rivendell],m4_esyscmd(cat PACKAGE_VERSION))
+AM_INIT_AUTOMAKE
 AC_SUBST(RPM_RELEASE,1)
+m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
+AC_CONFIG_MACRO_DIR([m4])
 
 #
 # Some Fully Resolved Install Paths
@@ -246,10 +248,10 @@ else
 fi
 
 AC_CONFIG_FILES([rivendell.spec \
-    ./Makefile \
-    ./make_slack \
-    ./slack-desc \
-    ./rivendell-suse \
+    Makefile \
+    make_slack \
+    slack-desc \
+    rivendell-suse \
     conf/rd-bin.conf \
     icons/Makefile \
     helpers/Makefile \

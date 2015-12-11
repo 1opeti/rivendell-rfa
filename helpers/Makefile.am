@@ -24,7 +24,7 @@
 ##
 
 
-CFLAGS = -Wall
+AM_CFLAGS = -Wall
 
 noinst_PROGRAMS = cwrap jsmin
 noinst_SCRIPTS = rdtrans.sh rdpack.sh
