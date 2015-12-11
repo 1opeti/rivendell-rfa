@@ -10662,3 +10662,23 @@
 2015-12-11 Fred Gleason <fredg@paravelsystems.com>
 	* Updated 'acinclude.m4', 'get_distro.sh' and 'get_target.sh'
 	from Rivendell v2.11.0int05'.
+2015-12-11 Fred Gleason <fredg@paravelsystems.com>
+	* Updated 'rdhpi/rdhpicardselector.cpp', 'rdhpi/rdhpicardselector.h',
+	'rdhpi/rdhpiinformation.cpp', 'rdhpi/rdhpiinformation.h',
+	'rdhpi/rdhpiplaystream.cpp', 'rdhpi/rdhpiplaystream.h',
+	'rdhpi/rdhpirecordstream.cpp', 'rdhpi/rdhpirecordstream.h',
+	'rdhpi/rdhpisoundcard.cpp', 'rdhpi/rdhpisoundcard.h',
+	'rdhpi/rdhpisoundselector.cpp' and 'rdhpi/rdhpisoundselector.cpp'
+	from Rivendell v2.10.3.
+	* Added an include for 'sys/types.h' in 'lib/rddb.h'.
+	* Added an include for 'unistd.h' in 'lib/rdcart_dialog.cpp'.
+	* Added an include for 'unistd.h' in 'lib/rdconfig.h'.
+	* Added an include for 'unistd.h' in 'lib/rdweb.cpp'.
+	* Added '-lpthread' to the linked libraries list in 'cae/Makefile.am'.
+	* Added '-ldl' to the linked libraries list in 'rdairplay/Makefile.am'.
+	* Updated 'utils/rdhpiinfo/change_mode.cpp',
+	'utils/rdhpiinfo/change_mode.h', 'utils/rdhpiinfo/rdhpiinfo.cpp' and
+	'utils/rdhpiinfo/rdhpiinfo.h' from Rivendell v2.10.3.
+	* Added 'utils/rdhpiinfo/virtdetails.cpp' and
+	'utils/rdhpiinfo/virtdetails.h' from Rivendell v2.10.3.
+	* Added an include for 'stdint.h' in 'lib/rdaconvert.h'.

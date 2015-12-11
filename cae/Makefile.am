@@ -35,7 +35,7 @@ bin_PROGRAMS = caed
 dist_caed_SOURCES = cae.cpp cae.h cae_socket.cpp cae_socket.h\
                     cae_hpi.cpp cae_jack.cpp cae_alsa.cpp
 nodist_caed_SOURCES = moc_cae.cpp moc_cae_socket.cpp
-caed_LDADD = -lqui -lrd -lid3 -lFLAC @LIBHPI@ @LIBJACK@ @LIBALSA@\
+caed_LDADD = -lqui -lrd -lid3 -lpthread -lFLAC @LIBHPI@ @LIBJACK@ @LIBALSA@\
              @LIBVORBIS@ @LIBSRC@
 # caed_LDFLAGS = -static
 

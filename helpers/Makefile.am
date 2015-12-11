@@ -24,7 +24,7 @@
 ##
 
 
-AM_CFLAGS = -Wall
+AM_CPPFLAGS = -Wall -Wno-strict-aliasing
 
 noinst_PROGRAMS = cwrap jsmin
 noinst_SCRIPTS = rdtrans.sh rdpack.sh

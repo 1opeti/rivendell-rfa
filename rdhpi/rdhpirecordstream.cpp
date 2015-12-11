@@ -4,7 +4,7 @@
 //
 //   (C) Copyright 2002-2007 Fred Gleason <fredg@paravelsystems.com>
 //
-//    $Id: rdhpirecordstream.cpp,v 1.1 2007/09/14 14:06:53 fredg Exp $
+//    $Id: rdhpirecordstream.cpp,v 1.7 2011/05/19 22:16:54 cvs Exp $
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License version 2 as
@@ -26,6 +26,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <syslog.h>
 #include <fcntl.h>
 #include <qobject.h>
 #include <qwidget.h>
@@ -39,6 +40,9 @@ RDHPIRecordStream::RDHPIRecordStream(RDHPISoundCard *card,
 			     QWidget *parent,const char *name) 
   :QObject(parent,name),RDWaveFile()
 { 
+  int quan;
+  uint16_t type[HPI_MAX_ADAPTERS];
+
   if(getenv(DEBUG_VAR)==NULL) {
     debug=false;
   }
@@ -66,6 +70,20 @@ RDHPIRecordStream::RDHPIRecordStream(RDHPISoundCard *card,
   record_length=0;
   is_open=false;
   pdata=NULL;
+
+  //
+  // Get Adapter Indices
+  //
+#if HPI_VER < 0x00030600
+  for(unsigned i=0;i<HPI_MAX_ADAPTERS;i++) {
+    card_index[i]=i;
+  }
+#else
+  LogHpi(HPI_SubSysGetNumAdapters(NULL,&quan));
+  for(int i=0;i<quan;i++) {
+    LogHpi(HPI_SubSysGetAdapter(NULL,i,card_index+i,type+i));
+  }
+#endif  // HPI_VER
 
   clock=new QTimer(this,"clock");
   connect(clock,SIGNAL(timeout()),this,SLOT(tickClock()));
@@ -155,8 +173,12 @@ void RDHPIRecordStream::closeWave()
 
 bool RDHPIRecordStream::formatSupported(RDWaveFile::Format format)
 {
+#if HPI_VER < HPI_VERSION_CONSTRUCTOR(3L,10,0)
   HPI_FORMAT hformat;
-  HPI_HISTREAM histream;
+#else
+  struct hpi_format hformat;
+#endif
+  hpi_handle_t histream;
   bool found=false;
 
   if(card_number<0) {
@@ -170,7 +192,7 @@ bool RDHPIRecordStream::formatSupported(RDWaveFile::Format format)
   }
   if(!is_open) {
     for(int i=0;i<sound_card->getCardInputStreams(card_number);i++) {
-      if(HPI_InStreamOpen(hpi_subsys,card_number,i,&histream)==0) {
+      if(HPI_InStreamOpen(NULL,card_index[card_number],i,&histream)==0) {
 	found=true;
 	break;
       }
@@ -184,33 +206,35 @@ bool RDHPIRecordStream::formatSupported(RDWaveFile::Format format)
   }
   switch(format) {
       case RDWaveFile::Pcm8:
-	HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_PCM8_UNSIGNED,
-			 getSamplesPerSec(),getHeadBitRate(),0);
-	state=HPI_InStreamQueryFormat(hpi_subsys,histream,&hformat);
+	LogHpi(HPI_FormatCreate(&hformat,getChannels(),
+				HPI_FORMAT_PCM8_UNSIGNED,
+				getSamplesPerSec(),getHeadBitRate(),0));
+	state=HPI_InStreamQueryFormat(NULL,histream,&hformat);
 	break;
 
       case RDWaveFile::Pcm16:
-	HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_PCM16_SIGNED,
-			 getSamplesPerSec(),getHeadBitRate(),0);
-	state=HPI_InStreamQueryFormat(hpi_subsys,histream,&hformat);
+	LogHpi(HPI_FormatCreate(&hformat,getChannels(),
+				HPI_FORMAT_PCM16_SIGNED,
+				getSamplesPerSec(),getHeadBitRate(),0));
+	state=HPI_InStreamQueryFormat(NULL,histream,&hformat);
 	break;
 
       case RDWaveFile::MpegL1:
-	HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_MPEG_L1,
-			 getSamplesPerSec(),getHeadBitRate(),0);
-	state=HPI_InStreamQueryFormat(hpi_subsys,histream,&hformat);
+	LogHpi(HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_MPEG_L1,
+				getSamplesPerSec(),getHeadBitRate(),0));
+	state=HPI_InStreamQueryFormat(NULL,histream,&hformat);
 	break;
 
       case RDWaveFile::MpegL2:
-	HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_MPEG_L2,
-			 getSamplesPerSec(),getHeadBitRate(),0);
-	state=HPI_InStreamQueryFormat(hpi_subsys,histream,&hformat);
+	LogHpi(HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_MPEG_L2,
+				getSamplesPerSec(),getHeadBitRate(),0));
+	state=HPI_InStreamQueryFormat(NULL,histream,&hformat);
 	break;
 
       case RDWaveFile::MpegL3:
-	HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_MPEG_L3,
-			 getSamplesPerSec(),getHeadBitRate(),0);
-	state=HPI_InStreamQueryFormat(hpi_subsys,histream,&hformat);
+	LogHpi(HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_MPEG_L3,
+				getSamplesPerSec(),getHeadBitRate(),0));
+	state=HPI_InStreamQueryFormat(NULL,histream,&hformat);
 	break;
 
       default:
@@ -218,7 +242,7 @@ bool RDHPIRecordStream::formatSupported(RDWaveFile::Format format)
 	break;
   }
   if(!is_open) {
-    HPI_InStreamClose(hpi_subsys,histream);
+    LogHpi(HPI_InStreamClose(NULL,histream));
   }
   if(state!=0) {
     return false;
@@ -332,9 +356,15 @@ int RDHPIRecordStream::getPosition() const
 }
 
 
+unsigned RDHPIRecordStream::samplesRecorded() const
+{
+  return samples_recorded;
+}
+
+
 bool RDHPIRecordStream::recordReady()
 {
-  HW16 hpi_error=0;
+  hpi_err_t hpi_error=0;
   char hpi_text[200];
 
   if(debug) {
@@ -345,7 +375,7 @@ bool RDHPIRecordStream::recordReady()
   }
   if((!is_recording)&&(!is_paused)) {
     resetWave();
-    if(HPI_InStreamGetInfoEx(hpi_subsys,hpi_stream,
+    if(HPI_InStreamGetInfoEx(NULL,hpi_stream,
 			     &state,&buffer_size,&data_recorded,
 			     &samples_recorded,&reserved)!=0) {
       if(debug) {
@@ -361,7 +391,7 @@ bool RDHPIRecordStream::recordReady()
     if(pdata!=NULL) {
       delete pdata;
     }
-    pdata=(HW8 *)malloc(fragment_size);
+    pdata=(uint8_t *)malloc(fragment_size);
     if(pdata==NULL) {
       if(debug) {
 	printf("RDHPIRecordStream: couldn't allocate buffer\n");
@@ -376,17 +406,17 @@ bool RDHPIRecordStream::recordReady()
 	  }
 	  switch(getBitsPerSample()) {
 	      case 8:
-		HPI_FormatCreate(&format,getChannels(),
+		hpi_error=HPI_FormatCreate(&format,getChannels(),
 				 HPI_FORMAT_PCM8_UNSIGNED,getSamplesPerSec(),
 				 0,0);
 		break;
 	      case 16:
-		HPI_FormatCreate(&format,getChannels(),
+		hpi_error=HPI_FormatCreate(&format,getChannels(),
 				 HPI_FORMAT_PCM16_SIGNED,getSamplesPerSec(),
 				 0,0);
 		break;
 	      case 32:
-		HPI_FormatCreate(&format,getChannels(),
+		hpi_error=HPI_FormatCreate(&format,getChannels(),
 				 HPI_FORMAT_PCM32_SIGNED,getSamplesPerSec(),
 				 0,0);
 		break;
@@ -404,22 +434,22 @@ bool RDHPIRecordStream::recordReady()
 	  }
 	  switch(getHeadLayer()) {
 	      case 1:
-		HPI_FormatCreate(&format,getChannels(),
+		hpi_error=HPI_FormatCreate(&format,getChannels(),
 				 HPI_FORMAT_MPEG_L1,getSamplesPerSec(),
 				 getHeadBitRate(),getHeadFlags());
 		break;
 	      case 2:
-		HPI_FormatCreate(&format,getChannels(),
+		hpi_error=HPI_FormatCreate(&format,getChannels(),
 				 HPI_FORMAT_MPEG_L2,getSamplesPerSec(),
 				 getHeadBitRate(),getHeadFlags());
 		break;
 	      case 3:
-		HPI_FormatCreate(&format,getChannels(),
+		hpi_error=HPI_FormatCreate(&format,getChannels(),
 				 HPI_FORMAT_MPEG_L3,getSamplesPerSec(),
 				 getHeadBitRate(),getHeadFlags());
 		break;
 	      default:
-		HPI_AdapterClose(hpi_subsys,card_number);
+		hpi_error=HPI_AdapterClose(NULL,card_index[card_number]);
 		if(debug) {
 		  printf("RDHPIRecordStream: invalid MPEG-1 layer\n");
 		}
@@ -447,7 +477,7 @@ bool RDHPIRecordStream::recordReady()
 	  if(debug) {
 	    printf("RDHPIRecordStream: using OggVorbis\n");
 	  }
-	  HPI_FormatCreate(&format,getChannels(),
+	  hpi_error=HPI_FormatCreate(&format,getChannels(),
 			   HPI_FORMAT_PCM16_SIGNED,getSamplesPerSec(),
 			   0,0);
 	  break;
@@ -459,7 +489,7 @@ bool RDHPIRecordStream::recordReady()
 	  return false;
 	  break;
     }
-    if((hpi_error=HPI_InStreamQueryFormat(hpi_subsys,hpi_stream,
+    if((hpi_error=HPI_InStreamQueryFormat(NULL,hpi_stream,
 			       &format))!=0) {
       if(debug) {
 	HPI_GetErrorText(hpi_error,hpi_text);
@@ -472,8 +502,8 @@ bool RDHPIRecordStream::recordReady()
 #if HPI_VER < 0x00030500
   HPI_DataCreate(&hpi_data,&format,pdata,fragment_size);
 #endif
-  HPI_InStreamSetFormat(hpi_subsys,hpi_stream,&format);
-  HPI_InStreamStart(hpi_subsys,hpi_stream);
+  hpi_error=HPI_InStreamSetFormat(NULL,hpi_stream,&format);
+  hpi_error=HPI_InStreamStart(NULL,hpi_stream);
 //  clock->start(2*fragment_time/3);
   clock->start(100);
   is_ready=true;
@@ -505,8 +535,8 @@ void RDHPIRecordStream::record()
     recordReady();
   }
   record_started=false;
-  HPI_InStreamReset(hpi_subsys,hpi_stream);
-  HPI_InStreamStart(hpi_subsys,hpi_stream);
+  LogHpi(HPI_InStreamReset(NULL,hpi_stream));
+  LogHpi(HPI_InStreamStart(NULL,hpi_stream));
   is_recording=true;
   is_paused=false;
   emit isStopped(false);
@@ -529,14 +559,13 @@ void RDHPIRecordStream::pause()
   if(!is_recording) {
     return;
   }
-  HPI_InStreamStop(hpi_subsys,hpi_stream);
+  LogHpi(HPI_InStreamStop(NULL,hpi_stream));
   tickClock();
-  HPI_InStreamGetInfoEx(hpi_subsys,hpi_stream,
-			&state,&buffer_size,&data_recorded,
-			&samples_recorded,&reserved);
+  LogHpi(HPI_InStreamGetInfoEx(NULL,hpi_stream,&state,&buffer_size,
+			       &data_recorded,&samples_recorded,&reserved));
   is_recording=false;
   is_paused=true;
-  HPI_InStreamStart(hpi_subsys,hpi_stream);
+  LogHpi(HPI_InStreamStart(NULL,hpi_stream));
   emit paused();
   emit stateChanged(card_number,stream_number,2);  // Paused
   if(debug) {
@@ -552,7 +581,7 @@ void RDHPIRecordStream::stop()
     printf("RDHPIRecordStream: received stop()\n");
   }
   if(is_ready|is_recording|is_paused) {
-    HPI_InStreamStop(hpi_subsys,hpi_stream);
+    LogHpi(HPI_InStreamStop(NULL,hpi_stream));
     tickClock();
     clock->stop();
     is_recording=false;
@@ -590,9 +619,9 @@ void RDHPIRecordStream::setRecordLength(int length)
 
 void RDHPIRecordStream::tickClock()
 {
-  HPI_InStreamGetInfoEx(hpi_subsys,hpi_stream,
-			&state,&buffer_size,&data_recorded,
-			&samples_recorded,&reserved);
+  LogHpi(HPI_InStreamGetInfoEx(NULL,hpi_stream,
+			       &state,&buffer_size,&data_recorded,
+			       &samples_recorded,&reserved));
   if((!record_started)&&(is_recording)) {
     if(samples_recorded>0) {
       if(record_length>0) {
@@ -609,23 +638,22 @@ void RDHPIRecordStream::tickClock()
   }
   while(data_recorded>fragment_size) {
 #if HPI_VER > 0x00030500
-    HPI_InStreamReadBuf(hpi_subsys,hpi_stream,pdata,fragment_size);
+    LogHpi(HPI_InStreamReadBuf(NULL,hpi_stream,pdata,fragment_size));
 #else
-    HPI_InStreamRead(hpi_subsys,hpi_stream,&hpi_data);
+    LogHpi(HPI_InStreamRead(NULL,hpi_stream,&hpi_data));
 #endif
     if(is_recording) {
       writeWave(pdata,fragment_size);
     }
-    HPI_InStreamGetInfoEx(hpi_subsys,hpi_stream,
-			  &state,&buffer_size,&data_recorded,
-			  &samples_recorded,&reserved);
+    LogHpi(HPI_InStreamGetInfoEx(NULL,hpi_stream,&state,&buffer_size,
+				 &data_recorded,&samples_recorded,&reserved));
   }
   if(state==HPI_STATE_STOPPED) {
 #if HPI_VER > 0x00030500
-    HPI_InStreamReadBuf(hpi_subsys,hpi_stream,pdata,data_recorded);
+    LogHpi(HPI_InStreamReadBuf(NULL,hpi_stream,pdata,data_recorded));
 #else
-    HPI_DataCreate(&hpi_data,&format,pdata,data_recorded);
-    HPI_InStreamRead(hpi_subsys,hpi_stream,&hpi_data);
+    LogHpi(HPI_DataCreate(&hpi_data,&format,pdata,data_recorded));
+    LogHpi(HPI_InStreamRead(NULL,hpi_stream,&hpi_data));
 #endif
     if(is_recording) {
       writeWave(pdata,data_recorded);
@@ -641,11 +669,11 @@ void RDHPIRecordStream::tickClock()
 
 bool RDHPIRecordStream::GetStream()
 {
-  HW16 hpi_err;
+  hpi_err_t hpi_err;
   char hpi_text[100];
 
   if((hpi_err=
-      HPI_InStreamOpen(hpi_subsys,card_number,stream_number,&hpi_stream))!=0) {
+      HPI_InStreamOpen(NULL,card_index[card_number],stream_number,&hpi_stream))!=0) {
     if(debug) {
       HPI_GetErrorText(hpi_err,hpi_text);
       fprintf(stderr,"*** HPI Error: %s ***\n",hpi_text);
@@ -658,6 +686,17 @@ bool RDHPIRecordStream::GetStream()
 
 void RDHPIRecordStream::FreeStream()
 {
-  HPI_InStreamClose(hpi_subsys,hpi_stream);
+  LogHpi(HPI_InStreamClose(NULL,hpi_stream));
 }
 
+
+hpi_err_t RDHPIRecordStream::LogHpi(hpi_err_t err)
+{
+  char err_txt[200];
+
+  if(err!=0) {
+    HPI_GetErrorText(err,err_txt);
+    syslog(LOG_NOTICE,"HPI Error: %s",err_txt);
+  }
+  return err;
+}

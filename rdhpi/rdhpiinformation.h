@@ -4,7 +4,7 @@
 //
 //   (C) Copyright 2002-2007 Fred Gleason <fredg@paravelsystems.com>
 //
-//    $Id: rdhpiinformation.h,v 1.1 2007/09/14 14:06:53 fredg Exp $
+//    $Id: rdhpiinformation.h,v 1.2 2011/05/18 15:25:33 cvs Exp $
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License version 2 as
@@ -23,6 +23,7 @@
 #ifndef RDHPIINFORMATION_H
 #define RDHPIINFORMATION_H
 
+#include <stdint.h>
 
 class RDHPIInformation
 {
@@ -34,6 +35,10 @@ class RDHPIInformation
   void setHpiMajorVersion(unsigned ver);
   unsigned hpiMinorVersion() const;
   void setHpiMinorVersion(unsigned ver);
+  unsigned hpiPointVersion() const;
+  void setHpiPointVersion(unsigned ver);
+  uint32_t hpiVersion() const;
+  void setHpiVersion(uint32_t ver);
   unsigned dspMajorVersion() const;
   void setDspMajorVersion(unsigned ver);
   unsigned dspMinorVersion() const;
@@ -46,9 +51,8 @@ class RDHPIInformation
 
  private:
   unsigned serial_number;
-  unsigned hpi_major_version;
-  unsigned hpi_minor_version;
   unsigned dsp_major_version;
+  uint32_t hpi_version;
   unsigned dsp_minor_version;
   char pcb_version;
   unsigned assembly_version;

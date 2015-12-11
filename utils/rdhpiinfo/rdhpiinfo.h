@@ -4,7 +4,7 @@
 //
 //   (C) Copyright 2002-2005 Fred Gleason <fredg@paravelsystems.com>
 //
-//    $Id: rdhpiinfo.h,v 1.2 2008/03/28 20:00:09 fredg Exp $
+//    $Id: rdhpiinfo.h,v 1.5.6.1 2012/05/04 14:56:23 cvs Exp $
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License version 2 as
@@ -27,12 +27,17 @@
 #include <qwidget.h>
 #include <qcombobox.h>
 #include <qlabel.h>
+#include <qlineedit.h>
 #include <qpushbutton.h>
+#include <qtimer.h>
 
 #include <asihpi/hpi.h>
+#if HPI_VER < 0x040600
+typedef uint16_t hpi_err_t;
+typedef uint32_t hpi_handle_t;
+#endif
 
 #define RDHPIINFO_USAGE "\n"
-
 
 class MainWidget : public QWidget
 {
@@ -46,27 +51,38 @@ class MainWidget : public QWidget
  private slots:
   void nameActivatedData(int id);
   void changeModeData();
+  void utilizationData();
+  void updateDspUtilization();
 
  private:
   void LoadAdapters();
+  hpi_err_t HpiErr(hpi_err_t err,const char *func_name=0) const;
   QLabel *info_name_label;
   QComboBox *info_name_box;
+  QLabel *info_utilization_label;
+  QLineEdit *info_utilization_edit;
+  QPushButton *info_utilization_button;
+  QLabel *info_index_label;
   QLabel *info_serial_label;
   QLabel *info_istreams_label;
   QLabel *info_ostreams_label;
   QLabel *info_dsp_label;
   QLabel *info_adapter_label;
-  QLabel *info_mode_label;
+  QLineEdit *info_mode_edit;
   QPushButton *info_changemode_button;
-  HW32 hpi_version;
+  uint32_t hpi_version;
   QString hpi_name[HPI_MAX_ADAPTERS];
   int name_map[HPI_MAX_ADAPTERS];
-  HW16 hpi_ostreams[HPI_MAX_ADAPTERS];
-  HW16 hpi_istreams[HPI_MAX_ADAPTERS];
-  HW16 hpi_card_version[HPI_MAX_ADAPTERS];
-  HW32 hpi_serial[HPI_MAX_ADAPTERS];
-  HW16 hpi_type[HPI_MAX_ADAPTERS];
-  HW32 hpi_mode[HPI_MAX_ADAPTERS];
+  uint32_t hpi_indexes[HPI_MAX_ADAPTERS];
+  uint16_t hpi_ostreams[HPI_MAX_ADAPTERS];
+  uint16_t hpi_istreams[HPI_MAX_ADAPTERS];
+  uint16_t hpi_card_version[HPI_MAX_ADAPTERS];
+  uint32_t hpi_serial[HPI_MAX_ADAPTERS];
+  uint16_t hpi_type[HPI_MAX_ADAPTERS];
+  uint32_t hpi_mode[HPI_MAX_ADAPTERS];
+  hpi_handle_t hpi_profile[HPI_MAX_ADAPTERS];
+  uint16_t hpi_profile_quan[HPI_MAX_ADAPTERS];
+  QTimer *hpi_profile_timer;
 };
 
 

@@ -4,7 +4,7 @@
 //
 //   (C) Copyright 2002-2007 Fred Gleason <fredg@paravelsystems.com>
 //
-//    $Id: rdhpiplaystream.h,v 1.3 2008/05/12 13:39:47 fredg Exp $
+//    $Id: rdhpiplaystream.h,v 1.7.6.1 2012/05/04 14:56:22 cvs Exp $
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License version 2 as
@@ -37,6 +37,10 @@
 #include <rdhpisoundcard.h>
 
 #include <asihpi/hpi.h>
+#ifndef HPI_VER
+#include <asihpi/hpi_version.h>
+#endif
+
 #define MAX_FRAGMENT_SIZE 192000
 #define FRAGMENT_TIME 50
 #define TIMESCALE_LOW_LIMIT 83300
@@ -87,10 +91,12 @@ class RDHPIPlayStream : public QObject,public RDWaveFile
   void Drained();
   int GetStream();
   void FreeStream();
+  hpi_err_t LogHpi(hpi_err_t err);
   RDHPISoundCard *sound_card;
   RDHPIPlayStream::State stream_state;
   QString wave_name;
   QTimer *clock;
+  uint32_t card_index[HPI_MAX_ADAPTERS];
   int card_number;
   int stream_number;
   bool is_open;
@@ -108,19 +114,23 @@ class RDHPIPlayStream : public QObject,public RDWaveFile
   int play_speed;
   bool pitch_can_vary;
   bool rate_can_vary;
-  HPI_HOSTREAM hpi_stream;
-  HW16 state;
-  HW32 buffer_size;
-  HW32 data_to_play;
-  HW32 samples_played;
-  HW32 reserved;
+  hpi_handle_t hpi_stream;
+  uint16_t state;
+  uint32_t buffer_size;
+  uint32_t data_to_play;
+  uint32_t samples_played;
+  uint32_t reserved;
   int fragment_time;
-  HW8 *pdata;
+  uint8_t *pdata;
+#if HPI_VER < 0x030a00
   HPI_FORMAT format;
+#else
+  struct hpi_format format;
+#endif
 #if HPI_VER < 0x00030500
   HPI_DATA hpi_data;
 #endif
-  HW32 fragment_size;
+  uint32_t fragment_size;
   bool restart_transport;
   int samples_pending;
   unsigned current_position;

@@ -4,7 +4,7 @@
 //
 //   (C) Copyright 2002-2007 Fred Gleason <fredg@paravelsystems.com>
 //
-//    $Id: rdhpisoundselector.h,v 1.1 2007/09/14 14:06:53 fredg Exp $
+//    $Id: rdhpisoundselector.h,v 1.4 2011/05/18 14:38:13 cvs Exp $
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License version 2 as
@@ -35,10 +35,6 @@
 #include <qlistbox.h>
 
 #include <rdhpisoundcard.h>
-
-#ifdef HPI
-#include <asihpi/hpi.h>
-#endif  // HPI
 
 #ifdef ALSA
 #include <alsa/asoundlib.h>

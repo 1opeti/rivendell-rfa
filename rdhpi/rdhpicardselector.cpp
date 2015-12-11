@@ -4,7 +4,7 @@
 //
 //   (C) Copyright 2002-2007 Fred Gleason <fredg@paravelsystems.com>
 //
-//    $Id: rdhpicardselector.cpp,v 1.1 2007/09/14 14:06:53 fredg Exp $
+//    $Id: rdhpicardselector.cpp,v 1.3 2010/07/29 19:32:36 cvs Exp $
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License version 2 as

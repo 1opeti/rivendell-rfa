@@ -4,7 +4,7 @@
 //
 //   (C) Copyright 2002-2007 Fred Gleason <fredg@paravelsystems.com>
 //
-//    $Id: rdhpirecordstream.h,v 1.1 2007/09/14 14:06:53 fredg Exp $
+//    $Id: rdhpirecordstream.h,v 1.6.6.1 2012/05/04 14:56:22 cvs Exp $
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License version 2 as
@@ -40,6 +40,9 @@
 #define XRUN_VAR "_RSOUND_XRUN"
 
 #include <asihpi/hpi.h>
+#ifndef HPI_VER
+#include <asihpi/hpi_version.h>
+#endif
 #define AUDIO_SIZE 32768
 #define RDHPIRECORDSTREAM_CLOCK_INTERVAL 100
 
@@ -65,6 +68,7 @@ class RDHPIRecordStream : public QObject,public RDWaveFile
   bool haveInputVOX() const;
   RDHPIRecordStream::RecordState getState();
   int getPosition() const;
+  unsigned samplesRecorded() const;
   
  signals:
   void isStopped(bool state);
@@ -92,10 +96,12 @@ class RDHPIRecordStream : public QObject,public RDWaveFile
  private:
   bool GetStream();
   void FreeStream();
+  hpi_err_t LogHpi(hpi_err_t err);
   RDHPISoundCard *sound_card;
   bool debug;
   bool xrun;
   QTimer *clock;
+  uint32_t card_index[HPI_MAX_ADAPTERS];
   int card_number;
   int stream_number;
   bool is_recording;
@@ -108,16 +114,20 @@ class RDHPIRecordStream : public QObject,public RDWaveFile
   unsigned audio_ptr;
   unsigned char abuf[AUDIO_SIZE];
   unsigned left_to_write;
-  HPI_HISTREAM hpi_stream;
-  HW16 state;
-  HW32 buffer_size;
-  HW32 data_recorded;
-  HW32 samples_recorded;
-  HW32 reserved;
-  HW32 fragment_size;
+  hpi_handle_t hpi_stream;
+  uint16_t state;
+  uint32_t buffer_size;
+  uint32_t data_recorded;
+  uint32_t samples_recorded;
+  uint32_t reserved;
+  uint32_t fragment_size;
   int fragment_time;
-  HW8 *pdata;
+  uint8_t *pdata;
+#if HPI_VER < 0x030a00
   HPI_FORMAT format;
+#else
+  struct hpi_format format;
+#endif
 #if HPI_VER < 0x00030500
   HPI_DATA hpi_data;
 #endif

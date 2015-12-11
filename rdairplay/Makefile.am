@@ -73,7 +73,7 @@ nodist_rdairplay_SOURCES = moc_rdairplay.cpp moc_loglinebox.cpp\
                            moc_list_logs.cpp moc_marker_bar.cpp\
                            moc_rlmhost.cpp
 
-rdairplay_LDADD = -lqui -lrd -lid3 -lFLAC @LIBVORBIS@
+rdairplay_LDADD = -lqui -lrd -lid3 -lFLAC -ldl @LIBVORBIS@
 rdairplay_LDFLAGS = -rdynamic
 
 EXTRA_DIST = rdairplay.pro rdairplay_es.ts rdairplay_fr.ts rdairplay_de.ts

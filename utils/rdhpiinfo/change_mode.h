@@ -4,7 +4,7 @@
 //
 //   (C) Copyright 2002-2005 Fred Gleason <fredg@paravelsystems.com>
 //
-//    $Id: change_mode.h,v 1.1 2007/09/14 16:29:22 fredg Exp $
+//    $Id: change_mode.h,v 1.5 2011/05/18 14:38:14 cvs Exp $
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License version 2 as
@@ -23,7 +23,7 @@
 #ifndef CHANGE_MODE_H
 #define CHANGE_MODE_H
 
-#define MAX_HPI_MODES 10
+#define MAX_HPI_MODES 11
 
 #include <qdialog.h>
 #include <qcombobox.h>
@@ -52,7 +52,7 @@ class ChangeMode : public QDialog
 
  private:
   int change_index;
-  HW32 hpi_mode_map[MAX_HPI_MODES];
+  uint32_t hpi_mode_map[MAX_HPI_MODES];
   QComboBox *change_mode_box;
 };
 

@@ -23,6 +23,8 @@
 #ifndef RDDB_INC
 #define RDDB_INC
 
+#include <sys/types.h>
+
 #include <qobject.h>
 #include <qsqldatabase.h>
 #include <qstring.h>

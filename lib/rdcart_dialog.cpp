@@ -20,6 +20,8 @@
 //   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 
+#include <unistd.h>
+
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <qsqlquery.h>

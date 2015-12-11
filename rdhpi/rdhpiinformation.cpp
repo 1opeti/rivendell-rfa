@@ -4,7 +4,7 @@
 //
 //   (C) Copyright 2002-2007 Fred Gleason <fredg@paravelsystems.com>
 //
-//    $Id: rdhpiinformation.cpp,v 1.1 2007/09/14 14:06:53 fredg Exp $
+//    $Id: rdhpiinformation.cpp,v 1.4 2011/05/18 15:25:33 cvs Exp $
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License version 2 as
@@ -19,6 +19,8 @@
 //   License along with this program; if not, write to the Free Software
 //   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
+
+#include <stdio.h>
 
 #include <rdhpiinformation.h>
 
@@ -43,25 +45,31 @@ void RDHPIInformation::setSerialNumber(unsigned num)
 
 unsigned RDHPIInformation::hpiMajorVersion() const
 {
-  return hpi_major_version;
-}
-
-
-void RDHPIInformation::setHpiMajorVersion(unsigned ver)
-{
-  hpi_major_version=ver;
+  return (hpi_version>>16)&0xffff;
 }
 
 
 unsigned RDHPIInformation::hpiMinorVersion() const
 {
-  return hpi_minor_version;
+  return (hpi_version>>8)&0xff;
 }
 
 
-void RDHPIInformation::setHpiMinorVersion(unsigned ver)
+unsigned RDHPIInformation::hpiPointVersion() const
 {
-  hpi_minor_version=ver;
+  return hpi_version&0xff;
+}
+
+
+uint32_t RDHPIInformation::hpiVersion() const
+{
+  return hpi_version;
+}
+
+
+void RDHPIInformation::setHpiVersion(uint32_t ver)
+{
+  hpi_version=ver;
 }
 
 
@@ -116,6 +124,7 @@ void RDHPIInformation::setAssemblyVersion(unsigned ver)
 void RDHPIInformation::clear()
 {
   serial_number=0;
+  hpi_version=0;
   dsp_major_version=0;
   dsp_minor_version=0;
   pcb_version='0';

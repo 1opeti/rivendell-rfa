@@ -25,6 +25,7 @@
 
 #ifndef WIN32
 #include <syslog.h>
+#include <unistd.h>
 #endif  // WIN32
 
 #include <vector>

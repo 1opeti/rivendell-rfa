@@ -23,6 +23,8 @@
 #ifndef RDACONVERT_H
 #define RDACONVERT_H
 
+#include <stdint.h>
+
 #include <samplerate.h>
 
 #include <qmainwindow.h>
