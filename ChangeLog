@@ -10657,3 +10657,8 @@
 2009-08-25 Fred Gleason <fredg@paravelsystems.com>
 	* Updated the 'NEWS' file.
 	* Updated the package version to 1.5.2.
+2015-12-11 Fred Gleason <fredg@paravelsystems.com>
+	* Modernized the autotools invocations.
+2015-12-11 Fred Gleason <fredg@paravelsystems.com>
+	* Updated 'acinclude.m4', 'get_distro.sh' and 'get_target.sh'
+	from Rivendell v2.11.0int05'.
