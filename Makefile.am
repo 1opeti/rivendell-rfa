@@ -54,15 +54,15 @@ uninstall-exec:
 	rm -f /etc/sysconfig/rivendell
 
 rpm:	dist
-	cp rivendell-$(VERSION).tar.gz $(RPM_ROOT)/SOURCES/
+	cp rivendell-$(VERSION).tar.gz $(HOME)/rpmbuild/SOURCES/
 	$(RPMBUILD) -ba --target $(ARCH)-$(VENDOR)-linux rivendell.spec
-	mv $(RPM_ROOT)/RPMS/$(ARCH)/rivendell-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
-	mv $(RPM_ROOT)/RPMS/$(ARCH)/rivendell-importers-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
-	mv $(RPM_ROOT)/RPMS/$(ARCH)/rivendell-web-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
-	mv $(RPM_ROOT)/RPMS/$(ARCH)/rivendell-devel-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
-	mv $(RPM_ROOT)/SRPMS/rivendell-$(VERSION)-@RPM_RELEASE@.src.rpm $(top_srcdir)/
-	rm $(RPM_ROOT)/SOURCES/rivendell-$(VERSION).tar.gz
-	rm -rf $(RPM_ROOT)/BUILD/rivendell-$(VERSION)
+	mv $(HOME)/rpmbuild/RPMS/$(ARCH)/rivendell-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
+	mv $(HOME)/rpmbuild/RPMS/$(ARCH)/rivendell-importers-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
+	mv $(HOME)/rpmbuild/RPMS/$(ARCH)/rivendell-web-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
+	mv $(HOME)/rpmbuild/RPMS/$(ARCH)/rivendell-devel-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
+	mv $(HOME)/rpmbuild/SRPMS/rivendell-$(VERSION)-@RPM_RELEASE@.src.rpm $(top_srcdir)/
+	rm $(HOME)/rpmbuild/SOURCES/rivendell-$(VERSION).tar.gz
+	rm -rf $(HOME)/rpmbuild/BUILD/rivendell-$(VERSION)
 
 slack:	all
 	./make_slack

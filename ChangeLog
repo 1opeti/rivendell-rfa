@@ -10684,3 +10684,5 @@
 	* Added an include for 'stdint.h' in 'lib/rdaconvert.h'.
 2015-12-14 Fred Gleason <fredg@paravelsystems.com>
 	* Fixed warnings in 'helpers/cwrap.cpp'.
+2015-12-14 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed bogus dates in 'rivendell.spec.in'.

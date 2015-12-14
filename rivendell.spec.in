@@ -477,10 +477,10 @@ for 'rdfeed.cgi'.
 -- Added support for x86_64 architecture.
 -- Fixed broken symlink creation for 'rdfeed.mp3'.
 -- Fixed broken cdda2wav dependency for OpenSuSE 10.3.
-* Mon Nov 27 2007 Fred Gleason <fredg@paravelsystems.com>
+* Tue Nov 27 2007 Fred Gleason <fredg@paravelsystems.com>
 -- Added 'rdfeed.mp3' symlink to 'rdfeed.xml'.
 -- Added 'whiteball.png' to the web subpackage.
-* Tue Oct 10 2007 Fred Gleason <fredg@paravelsystems.com>
+* Wed Oct 10 2007 Fred Gleason <fredg@paravelsystems.com>
 -- Added 'rdcastmanager.cgi'.
 * Mon Sep 24 2007 Fred Gleason <fredg@paravelsystems.com>
 -- Added the 'web' subpackage.
@@ -501,15 +501,14 @@ for 'rdfeed.cgi'.
 -- Added RDDbCheck and RDBackup scripts.
 * Thu Jul 06 2006 Fred Gleason <fredg@salemradiolabs.com>
 -- Added the '%config' tag to /etc/sysconfig/rivendell.
-* Thu Jun 25 2006 Fred Gleason <fredg@salemradiolabs.com>
+* Thu Jun 22 2006 Fred Gleason <fredg@salemradiolabs.com>
 -- Added an XDG file for RDLogin.
 * Fri Mar 24 2006 Fred Gleason <fredg@salemradiolabs.com>
 -- Updated to reflect new layout of the 'utils/' directory.
 * Thu Mar 09 2006 Fred Gleason <fredg@salemradiolabs.com>
 -- Removed the conditional installation of RDImport.
-* Mon Feb 14 2006 Fred Gleason <fredg@salemradiolabs.com>
--- Altered the install section so as not to use 'make install'.
 * Tue Feb 14 2006 Fred Gleason <fredg@salemradiolabs.com>
+-- Altered the install section so as not to use 'make install'.
 -- Removed RDPanel.
 * Wed Feb 08 2006 Fred Gleason <fredg@salemradiolabs.com>
 -- Altered install paths to use $prefix value from Autoconf.
@@ -523,7 +522,6 @@ for 'rdfeed.cgi'.
 -- Added 'docs/tables/svc_rec_format.txt'.
 * Fri Nov 04 2005 Fred Gleason <fredg@salemradiolabs.com>
 -- Removed dependencies for 'update-desktop-files' and 'gettext'.
-* Thu Nov 04 2005 Fred Gleason <fredg@salemradiolabs.com>
 -- Added dependencies for 'update-desktop-files' and 'gettext'.
 * Tue Nov 01 2005 Fred Gleason <fredg@salemradiolabs.com>
 -- Added SuSE desktop integration.
@@ -575,7 +573,7 @@ for 'rdfeed.cgi'.
 -- Added RDImport.
 * Wed Jul 28 2004 Fred Gleason <fredg@salemradiolabs.com>
 -- Added '/etc/sysconfig/rivendell'.
-* Fri Jun 26 2004 Fred Gleason <fredg@salemradiolabs.com>
+* Fri Jun 25 2004 Fred Gleason <fredg@salemradiolabs.com>
 -- Added 'docs/JACK.txt'.
 * Wed Jun 09 2004 Fred Gleason <fredg@salemradiolabs.com>
 -- Added a rule to %post to create the pidfile directory.
@@ -597,7 +595,7 @@ for 'rdfeed.cgi'.
 -- Added 'sas_shim'.
 * Wed Jan 28 2004 Fred Gleason <fredg@salemradiolabs.com>
 -- Added 'docs/implemented_macros.txt' to the documentation directory.
-* Wed Dec 23 2003 Fred Gleason <fredg@salemradiolabs.com>
+* Tue Dec 23 2003 Fred Gleason <fredg@salemradiolabs.com>
 -- Added a dependency for 'qt3-mysql'.
 -- Added install rule for 'rc.rivendell'.
 * Thu Dec 11 2003 Fred Gleason <fredg@salemradiolabs.com>
