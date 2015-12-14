@@ -10682,3 +10682,5 @@
 	* Added 'utils/rdhpiinfo/virtdetails.cpp' and
 	'utils/rdhpiinfo/virtdetails.h' from Rivendell v2.10.3.
 	* Added an include for 'stdint.h' in 'lib/rdaconvert.h'.
+2015-12-14 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed warnings in 'helpers/cwrap.cpp'.
