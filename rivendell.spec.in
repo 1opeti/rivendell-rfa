@@ -28,7 +28,7 @@ License: GPL
 Packager: Fred Gleason <fredg@paravelsystems.com>
 Group: Productivity/Multimedia/Other
 Source: rivendell-@VERSION@.tar.gz
-Requires: cdparanoia qt3-mysql mysql-shared mpg321 bc wget samba-client lftp @CDDA_DEPS@
+Requires: cdparanoia qt3-MySQL mpg321 bc wget samba-client lftp @CDDA_DEPS@
 BuildRoot: /var/tmp/rivendell-@VERSION@
 
 %package importers
@@ -445,6 +445,9 @@ rm -rf $RPM_BUILD_ROOT
 @LOCAL_PREFIX@/src/rlm/rlm_inno713.c
 
 %changelog
+* Mon Dec 14 2015 Fred Gleason <fredg@paravelsystems.com>
+-- Removed 'mysql-shared' dependency.
+-- Changed 'qt3-mysql' dependency to 'qt3-MySQL'.
 * Wed Aug 19 2009 Fred Gleason <fredg@paravelsystems.com>
 -- Added 'docs/scheduler_formats.ods'.
 * Tue Aug 04 2009 Fred Gleason <fredg@paravelsystems.com>

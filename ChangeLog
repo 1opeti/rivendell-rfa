@@ -10688,3 +10688,6 @@
 	* Fixed bogus dates in 'rivendell.spec.in'.
 2015-12-14 Fred Gleason <fredg@paravelsystems.com>
 	* Backported XDG setup from Rivendell v10.11.0int05.
+2015-12-14 Fred Gleason <fredg@paravelsystems.com>
+	* Removed 'mysql-shared' dependency in 'rivendell.spec.in'.
+	* Changed 'qt3-mysql' dependency to 'qt3-MySQL' in 'rivendell.spec.in'.
