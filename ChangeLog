@@ -10686,3 +10686,5 @@
 	* Fixed warnings in 'helpers/cwrap.cpp'.
 2015-12-14 Fred Gleason <fredg@paravelsystems.com>
 	* Fixed bogus dates in 'rivendell.spec.in'.
+2015-12-14 Fred Gleason <fredg@paravelsystems.com>
+	* Backported XDG setup from Rivendell v10.11.0int05.

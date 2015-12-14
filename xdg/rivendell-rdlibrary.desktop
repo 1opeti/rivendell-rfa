@@ -1,13 +1,11 @@
 [Desktop Entry]
-Categories=Qt;
 Encoding=UTF-8
-BinaryPattern=
+Terminal=false
+Categories=Qt;KDE;Rivendell;
 Name=RDLibrary
 GenericName=Rivendell Library
 Exec=rdlibrary
 Icon=rivendell
-TerminalOptions=
-Path=
 Type=Application
-Terminal=0
+Terminal=false
 

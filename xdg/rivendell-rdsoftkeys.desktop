@@ -1,13 +1,11 @@
 [Desktop Entry]
-Categories=System;Applet
 Encoding=UTF-8
-BinaryPattern=
+Terminal=false
+Categories=Qt;KDE;Rivendell;
 Name=RDSoftKeys
 GenericName=Rivendell RML Button Panel
 Exec=rdsoftkeys
 Icon=rivendell
-TerminalOptions=
-Path=
 Type=Application
-Terminal=0
+Terminal=false
 

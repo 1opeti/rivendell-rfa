@@ -180,20 +180,30 @@ cp icons/rivendell-64x64.xpm $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/64x64/
 mkdir -p $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/128x128/apps
 cp icons/rivendell-128x128.xpm $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/128x128/apps/rivendell.xpm
 mkdir -p $RPM_BUILD_ROOT/usr/share/applications
-cp xdg/rdadmin.desktop $RPM_BUILD_ROOT/usr/share/applications/rdadmin.desktop
-cp xdg/rdlogin.desktop $RPM_BUILD_ROOT/usr/share/applications/rdlogin.desktop
-cp xdg/rdairplay.desktop $RPM_BUILD_ROOT/usr/share/applications/rdairplay.desktop
-cp xdg/rdpanel.desktop $RPM_BUILD_ROOT/usr/share/applications/rdpanel.desktop
-cp xdg/rdcatch.desktop $RPM_BUILD_ROOT/usr/share/applications/rdcatch.desktop
-cp xdg/rdgpimon.desktop $RPM_BUILD_ROOT/usr/share/applications/rdgpimon.desktop
-cp xdg/rdhpiinfo.desktop $RPM_BUILD_ROOT/usr/share/applications/rdhpiinfo.desktop
-cp xdg/rdalsaconfig.desktop $RPM_BUILD_ROOT/usr/share/applications/rdalsaconfig.desktop
-cp xdg/rdlibrary.desktop $RPM_BUILD_ROOT/usr/share/applications/rdlibrary.desktop
-cp xdg/rdlogedit.desktop $RPM_BUILD_ROOT/usr/share/applications/rdlogedit.desktop
-cp xdg/rdlogmanager.desktop $RPM_BUILD_ROOT/usr/share/applications/rdlogmanager.desktop
-cp xdg/rdcastmanager.desktop $RPM_BUILD_ROOT/usr/share/applications/rdcastmanager.desktop
-cp xdg/rmlsend.desktop $RPM_BUILD_ROOT/usr/share/applications/rmlsend.desktop
-cp xdg/rdsoftkeys.desktop $RPM_BUILD_ROOT/usr/share/applications/rdsoftkeys.desktop
+cp xdg/rivendell-rdadmin.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdadmin.desktop
+cp xdg/rivendell-rdlogin.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdlogin.desktop
+cp xdg/rivendell-rdairplay.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdairplay.desktop
+cp xdg/rivendell-rdpanel.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdpanel.desktop
+cp xdg/rivendell-rdcatch.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdcatch.desktop
+cp xdg/rivendell-rdgpimon.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdgpimon.desktop
+cp xdg/rivendell-rdhpiinfo-root.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdhpiinfo-root.desktop
+cp xdg/rivendell-rdalsaconfig-root.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdalsaconfig-root.desktop
+cp xdg/rivendell-rdlibrary.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdlibrary.desktop
+cp xdg/rivendell-rdlogedit.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdlogedit.desktop
+cp xdg/rivendell-rdlogmanager.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdlogmanager.desktop
+cp xdg/rivendell-rdcastmanager.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdcastmanager.desktop
+cp xdg/rivendell-rmlsend.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rmlsend.desktop
+cp xdg/rivendell-rdsoftkeys.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdsoftkeys.desktop
+mkdir -p $RPM_BUILD_ROOT/etc/xdg/menus/applications-merged
+cp xdg/rivendell-rivendell.menu $RPM_BUILD_ROOT/etc/xdg/menus/applications-merged/
+mkdir -p $RPM_BUILD_ROOT/etc/security/console.apps
+cp xdg/rdalsaconfig-root-consolehelper $RPM_BUILD_ROOT/etc/security/console.apps/rdalsaconfig-root
+cp xdg/rdhpiinfo-root-consolehelper $RPM_BUILD_ROOT/etc/security/console.apps/rdhpiinfo-root
+mkdir -p $RPM_BUILD_ROOT/etc/pam.d
+cp xdg/rdalsaconfig-root-pam $RPM_BUILD_ROOT/etc/pam.d/rdalsaconfig-root
+cp xdg/rdhpiinfo-root-pam $RPM_BUILD_ROOT/etc/pam.d/rdhpiinfo-root
+mkdir -p $RPM_BUILD_ROOT/usr/share/desktop-directories
+cp xdg/*.directory $RPM_BUILD_ROOT/usr/share/desktop-directories/
 mkdir $RPM_BUILD_ROOT/.qt
 touch $RPM_BUILD_ROOT/.qt/qt
 mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell
@@ -299,20 +309,29 @@ rm -rf $RPM_BUILD_ROOT
 /opt/kde3/share/icons/hicolor/48x48/apps/rivendell.xpm
 /opt/kde3/share/icons/hicolor/64x64/apps/rivendell.xpm
 /opt/kde3/share/icons/hicolor/128x128/apps/rivendell.xpm
-/usr/share/applications/rdadmin.desktop
-/usr/share/applications/rdlogin.desktop
-/usr/share/applications/rdairplay.desktop
-/usr/share/applications/rdpanel.desktop
-/usr/share/applications/rdcatch.desktop
-/usr/share/applications/rdgpimon.desktop
-/usr/share/applications/rdhpiinfo.desktop
-/usr/share/applications/rdalsaconfig.desktop
-/usr/share/applications/rdlibrary.desktop
-/usr/share/applications/rdlogedit.desktop
-/usr/share/applications/rdlogmanager.desktop
-/usr/share/applications/rdcastmanager.desktop
-/usr/share/applications/rmlsend.desktop
-/usr/share/applications/rdsoftkeys.desktop
+/usr/share/applications/rivendell-rdadmin.desktop
+/usr/share/applications/rivendell-rdlogin.desktop
+/usr/share/applications/rivendell-rdairplay.desktop
+/usr/share/applications/rivendell-rdpanel.desktop
+/usr/share/applications/rivendell-rdcatch.desktop
+/usr/share/applications/rivendell-rdgpimon.desktop
+/usr/share/applications/rivendell-rdhpiinfo-root.desktop
+/usr/share/applications/rivendell-rdalsaconfig-root.desktop
+/usr/share/applications/rivendell-rdlibrary.desktop
+/usr/share/applications/rivendell-rdlogedit.desktop
+/usr/share/applications/rivendell-rdlogmanager.desktop
+/usr/share/applications/rivendell-rdcastmanager.desktop
+/usr/share/applications/rivendell-rmlsend.desktop
+/usr/share/applications/rivendell-rdsoftkeys.desktop
+/usr/share/desktop-directories/rivendell-configuration.directory
+/usr/share/desktop-directories/rivendell-logtools.directory
+/usr/share/desktop-directories/rivendell-rivendell.directory
+/usr/share/desktop-directories/rivendell-utilities.directory
+/etc/pam.d/rdalsaconfig-root
+/etc/pam.d/rdhpiinfo-root
+/etc/security/console.apps/rdalsaconfig-root
+/etc/security/console.apps/rdhpiinfo-root
+/etc/xdg/menus/applications-merged/rivendell-rivendell.menu
 /@RD_LIB_PATH@/security/pam_rd.so
 /.qt/qt
 
