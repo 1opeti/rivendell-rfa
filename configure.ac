@@ -124,7 +124,8 @@ AC_CHECK_LIB(FLAC,FLAC__metadata_get_tags,[FLAC_METADATA_FOUND=yes],[])
 #
 # Check for Secret Rabbit Code
 #
-AC_CHECK_HEADER(samplerate.h,[SRC_FOUND=yes],[])
+AC_CHECK_HEADER(samplerate.h,[SRC_FOUND=yes],[AC_MSG_ERROR([*** libsamplerate not found ***])])
+SRC_NEEDED=yes
 AC_CHECK_FUNC(src_short_to_float_array,[SRC_CONV_FOUND=yes],[])
 
 #
@@ -173,7 +174,6 @@ if test $ALSA_FOUND ; then
     fi
     AC_DEFINE(ALSA,yes)
     AC_SUBST(LIBALSA,-lasound)
-    SRC_NEEDED=yes
     USING_ALSA=yes
   else 
     AC_SUBST(LIBALSA,"")

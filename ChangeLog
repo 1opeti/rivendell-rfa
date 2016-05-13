@@ -10695,3 +10695,5 @@
 	* Incremented the package version to 1.5.2rfa00.
 2016-05-13 Fred Gleason <fredg@paravelsystems.com>
 	* Removed a superfluous dependency on libXi in 'acinclude.m4'.
+2016-05-13 Fred Gleason <fredg@paravelsystems.com>
+	* Changed 'configure.in' to make libsamplerate a mandatory dependency.

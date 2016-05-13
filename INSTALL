@@ -12,6 +12,11 @@ Most modern Linux distros include this.  It's typically installed as part
 of the KDE Desktop Environment, although KDE is by no means required.
 It can also be downloaded directly from TrollTech (http://www.trolltech.com/).
 
+Secret Rabbit Code
+A sample-rate converter library, written by Erik de Castro Lopo.  If
+you are building support for JACK and/or ALSA, you will also need
+this.  See http://www.mega-nerd.com/SRC/.
+
 Optionally, one or more audio driver libraries.  Choices are:
 
   AudioScience HPI Driver - v3.00 or greater.
@@ -27,11 +32,6 @@ Optionally, one or more audio driver libraries.  Choices are:
   The Advanced Linux Sound Architecture (ALSA) v1.0 or greater.
   The standard soundcard driver for Linux for kernels 2.6.x or later.
   See http://www.alsa-project.org/.
-
-Secret Rabbit Code
-A sample-rate converter library, written by Erik de Castro Lopo.  If
-you are building support for JACK and/or ALSA, you will also need
-this.  See http://www.mega-nerd.com/SRC/.
 
 GPIO Driver
 A kernel driver for the line of data-acquisition boards from 
