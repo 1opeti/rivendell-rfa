@@ -167,18 +167,18 @@ mkdir -p $RPM_BUILD_ROOT/etc/init.d
 cp rivendell $RPM_BUILD_ROOT/etc/init.d
 mkdir -p $RPM_BUILD_ROOT/etc/sysconfig
 cp rivendell.sys $RPM_BUILD_ROOT/etc/sysconfig/rivendell
-mkdir -p $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/16x16/apps
-cp icons/rivendell-16x16.xpm $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/16x16/apps/rivendell.xpm
-mkdir -p $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/22x22/apps
-cp icons/rivendell-22x22.xpm $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/22x22/apps/rivendell.xpm
-mkdir -p $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/32x32/apps
-cp icons/rivendell-32x32.xpm $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/32x32/apps/rivendell.xpm
-mkdir -p $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/48x48/apps
-cp icons/rivendell-48x48.xpm $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/48x48/apps/rivendell.xpm
-mkdir -p $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/64x64/apps
-cp icons/rivendell-64x64.xpm $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/64x64/apps/rivendell.xpm
-mkdir -p $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/128x128/apps
-cp icons/rivendell-128x128.xpm $RPM_BUILD_ROOT/opt/kde3/share/icons/hicolor/128x128/apps/rivendell.xpm
+mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/16x16/apps
+cp icons/rivendell-16x16.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/16x16/apps/rivendell.xpm
+mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/22x22/apps
+cp icons/rivendell-22x22.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/22x22/apps/rivendell.xpm
+mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/32x32/apps
+cp icons/rivendell-32x32.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/32x32/apps/rivendell.xpm
+mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/48x48/apps
+cp icons/rivendell-48x48.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/48x48/apps/rivendell.xpm
+mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/64x64/apps
+cp icons/rivendell-64x64.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/64x64/apps/rivendell.xpm
+mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/128x128/apps
+cp icons/rivendell-128x128.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/128x128/apps/rivendell.xpm
 mkdir -p $RPM_BUILD_ROOT/usr/share/applications
 cp xdg/rivendell-rdadmin.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdadmin.desktop
 cp xdg/rivendell-rdlogin.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdlogin.desktop
@@ -311,12 +311,12 @@ rm -rf $RPM_BUILD_ROOT
 @LOCAL_PREFIX@/share/srlabs/rmlsend_es.qm
 /etc/init.d/rivendell
 %config /etc/sysconfig/rivendell
-/opt/kde3/share/icons/hicolor/16x16/apps/rivendell.xpm
-/opt/kde3/share/icons/hicolor/22x22/apps/rivendell.xpm
-/opt/kde3/share/icons/hicolor/32x32/apps/rivendell.xpm
-/opt/kde3/share/icons/hicolor/48x48/apps/rivendell.xpm
-/opt/kde3/share/icons/hicolor/64x64/apps/rivendell.xpm
-/opt/kde3/share/icons/hicolor/128x128/apps/rivendell.xpm
+/usr/share/icons/hicolor/16x16/apps/rivendell.xpm
+/usr/share/icons/hicolor/22x22/apps/rivendell.xpm
+/usr/share/icons/hicolor/32x32/apps/rivendell.xpm
+/usr/share/icons/hicolor/48x48/apps/rivendell.xpm
+/usr/share/icons/hicolor/64x64/apps/rivendell.xpm
+/usr/share/icons/hicolor/128x128/apps/rivendell.xpm
 /usr/share/applications/rivendell-rdadmin.desktop
 /usr/share/applications/rivendell-rdlogin.desktop
 /usr/share/applications/rivendell-rdairplay.desktop
