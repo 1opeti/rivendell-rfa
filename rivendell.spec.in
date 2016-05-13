@@ -233,6 +233,14 @@ cp pam_rd/.libs/pam_rd.so $RPM_BUILD_ROOT/@RD_LIB_PATH@/security/
 %post
 ldconfig
 mkdir -p -m 777 /var/run/rivendell
+if [ -x %{_bindir}/gtk-update-icon-cache ] ; then
+  %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
+fi
+
+%postun
+if [ -x %{_bindir}/gtk-update-icon-cache ] ; then
+  %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
+fi
 
 %post web
 /etc/init.d/apache2 restart

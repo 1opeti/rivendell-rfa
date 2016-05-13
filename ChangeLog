@@ -10697,3 +10697,6 @@
 	* Removed a superfluous dependency on libXi in 'acinclude.m4'.
 2016-05-13 Fred Gleason <fredg@paravelsystems.com>
 	* Changed 'configure.in' to make libsamplerate a mandatory dependency.
+2016-05-13 Fred Gleason <fredg@paravelsystems.com>
+	* Added an invocation to gtk-update-icon-cache(1) to the %post and
+	%postun installation scripts in 'rivendell.spec.in'.
