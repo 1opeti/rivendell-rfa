@@ -10704,3 +10704,5 @@
 	* Modified the icon installation path for RHEL in 'rivendell.spec.in'.
 2016-05-13 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 1.5.2rfa01.
+2016-05-16 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'sox' dependency in 'rivendell.spec.in'.
