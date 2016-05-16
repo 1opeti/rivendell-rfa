@@ -10708,3 +10708,6 @@
 	* Added a 'sox' dependency in 'rivendell.spec.in'.
 2016-05-16 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 1.5.2rfa02.
+2016-05-16 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'rivendell-suse.in' where daemon startup would
+	fail if '/var/run/rivendell' didn't exist.

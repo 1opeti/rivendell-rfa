@@ -89,6 +89,11 @@ function StopDaemons {
 export PATH=$PATH:/usr/local/bin:/usr/local/sbin
 
 #
+# Make sure that '/var/run/rivendell' exists
+#
+mkdir -p /var/run/rivendell
+
+#
 # If the LSB Init functions exist, use them, otherwise roll our own
 #
 if test -f /lib/lsb/init-functions ; then
