@@ -28,6 +28,7 @@
 #include <qsessionmanager.h>
 #include <qsignalmapper.h>
 
+#include <pwd.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,6 +44,7 @@
 #include <rd.h>
 #include <rdconf.h>
 #include <rdstation.h>
+#include <rduser.h>
 #include <rdcheck_daemons.h>
 #include <rdcmd_switch.h>
 #include <rddb.h>
@@ -174,7 +176,20 @@ MainObject::MainObject(QObject *parent,const char *name)
   // Station 
   //
   rdstation=new RDStation(ripcd_config->stationName());
-  rdstation->setUserName(rdstation->defaultName());
+  if(ripcd_config->followSystemUser()) {
+    struct passwd *pw=getpwuid(getuid());
+    RDUser *user=new RDUser(pw->pw_name);
+    if(user->exists()&&(!user->adminConfig())) {
+      rdstation->setUserName(pw->pw_name);
+    }
+    else {
+      rdstation->setUserName(rdstation->defaultName());
+    }
+    delete user;
+  }
+  else {
+    rdstation->setUserName(rdstation->defaultName());
+  }
   ripcd_host_addr=rdstation->address();
 
   if(qApp->argc()==1) {

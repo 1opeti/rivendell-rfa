@@ -213,7 +213,7 @@ MainObject::MainObject(QObject *parent,const char *name)
   // First try to create a new shared memory segment.
   if((meter_block_id=
       shmget(RD_METER_SHM_KEY,sizeof(struct RDMeterBlock),
-	     IPC_CREAT|IPC_EXCL|S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH))<0) {
+	     IPC_CREAT|IPC_EXCL|S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH))<0) {
     if(errno!=EEXIST) {
       LogLine(RDConfig::LogWarning,QString().
 	      sprintf("can't allocate shared memory segment, error:%d",
@@ -224,7 +224,7 @@ MainObject::MainObject(QObject *parent,const char *name)
     meter_block_id = shmget(RD_METER_SHM_KEY,sizeof(struct RDMeterBlock),0);
     shmctl(meter_block_id,IPC_RMID,NULL);
     if((meter_block_id=shmget(RD_METER_SHM_KEY,sizeof(struct RDMeterBlock),
-			      IPC_CREAT|IPC_EXCL|S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH))<0) {
+			      IPC_CREAT|IPC_EXCL|S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH))<0) {
       LogLine(RDConfig::LogErr,QString().sprintf("can't allocate shared memory segment after trying to destroy, error:%d",
 			      errno));
       exit(1);

@@ -38,6 +38,7 @@
 #include <qtimer.h>
 
 #include <rd.h>
+#include <rdconfig.h>
 
 //
 // Settings
@@ -72,6 +73,7 @@ class MainObject : public QObject
   int output_samplerate;
   SRC_STATE *src_state;
   SRC_DATA src_data;
+  RDConfig *rdconfig;
 };
 
 

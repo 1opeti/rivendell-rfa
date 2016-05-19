@@ -260,6 +260,12 @@ bool RDConfig::useStreamMeters() const
 }
 
 
+bool RDConfig::followSystemUser() const
+{
+  return conf_follow_system_user;
+}
+
+
 unsigned RDConfig::sampleRate() const
 {
   return conf_sample_rate;
@@ -405,6 +411,7 @@ void RDConfig::load()
   conf_airplay_logname=profile->stringValue("RDAirPlay","Logfile","");
   conf_catchd_logname=profile->stringValue("RDCatchd","Logfile","");
   conf_use_stream_meters=profile->boolValue("Hacks","UseStreamMeters",false);
+  conf_follow_system_user=profile->boolValue("Hacks","FollowSystemUser",false);
   conf_sample_rate=profile->intValue("Format","SampleRate",
 				     RD_DEFAULT_SAMPLE_RATE);
   conf_channels=profile->intValue("Format","Channels",RD_DEFAULT_CHANNELS);
@@ -471,6 +478,7 @@ void RDConfig::clear()
   conf_jack_ports[0].clear();
   conf_jack_ports[1].clear();
   conf_use_stream_meters=false;
+  conf_follow_system_user=false;
   conf_sample_rate=RD_DEFAULT_SAMPLE_RATE;
   conf_channels=RD_DEFAULT_CHANNELS;
 #ifndef WIN32

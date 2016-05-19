@@ -652,7 +652,7 @@ void RDImportAudio::Import()
 	      (const char *)import_tempdat_name,
 	      (const char *)import_tempwav_name);
   }
-  // printf("CMD: %s\n",(const char *)cmd);
+  printf("CMD: %s\n",(const char *)cmd);
   *import_running=true;
   import_import_aborted=false;
   import_in_selector_button->setDisabled(true);
@@ -666,7 +666,7 @@ void RDImportAudio::Import()
       chown(RDCut::pathName(import_cutname),import_config->uid(),
 	    import_config->gid());
       chmod(RDCut::pathName(import_cutname),
-	    S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+	    S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IWOTH|S_IROTH);
     }
     else {
       unlink(import_dest_filename);

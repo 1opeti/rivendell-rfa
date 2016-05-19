@@ -78,6 +78,7 @@ class RDConfig
   int jackConnections() const;
   QString jackPort(int num,int endpt) const;
   bool useStreamMeters() const;
+  bool followSystemUser() const;
   QString caeLogfile() const;
   bool enableMixerLogging() const;
   unsigned sampleRate() const;
@@ -120,6 +121,7 @@ class RDConfig
   QString conf_airplay_logname;
   QString conf_catchd_logname;
   bool conf_use_stream_meters;
+  bool conf_follow_system_user;
   std::vector<QString> conf_jack_ports[2];
   unsigned conf_sample_rate;
   unsigned conf_channels;

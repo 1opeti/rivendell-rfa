@@ -10713,3 +10713,12 @@
 	fail if '/var/run/rivendell' didn't exist.
 2016-05-16 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 1.5.2rfa03.
+2016-05-19 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'FollowSystemUser=' directive in the [Hacks] section of
+	rd.conf(5).
+	* Changed the permission mode of imported files to 0x777 in
+	'lib/rdimport_audio.cpp'.
+	* Changed the permission mode of imported files to 0x777 in
+	'utils/rdimport/rdimport.cpp'.
+	* Changed the permission mode of the meter segment from 0x755 to 0x777
+	in 'cae/cae.cpp'.

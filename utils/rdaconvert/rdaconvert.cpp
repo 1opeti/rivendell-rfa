@@ -67,6 +67,12 @@ MainObject::MainObject(QObject *parent,const char *name)
       gain_ratio=cmd->value(i).toDouble();
     }
   }
+
+  //
+  // Open Configuration File
+  //
+  rdconfig=new RDConfig();
+
   switch(operation) {
   case MainObject::OpsRatio:
     if(cmd->keys()!=2) {

@@ -203,6 +203,7 @@ bool MainObject::hpiLoadRecord(int card,int stream,int coding,int chans,
     return false;
   }
   chown((const char *)wavename,rd_config->uid(),rd_config->gid());
+  chmod((const char *)wavename,S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH);
   if(!record[card][stream]->recordReady()) {
     delete record[card][stream];
     record[card][stream]=NULL;

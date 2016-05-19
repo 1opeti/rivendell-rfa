@@ -92,6 +92,11 @@ SampleRate=44100
 Channels=2
 
 [Hacks]
+; Attempt to use the name of the currently logged-in Linux user as the
+; default Rivendell user.  If that user does not exist in Rivendell, then
+; use the configured default user from the Rivendell DB as usual.
+; FollowSystemUser=Yes
+
 ; If you are getting no output level meter indications with an older
 ; ASI card (such as the ASI4215, ASI4113 or ASI4111), try uncommenting
 ; the following line:

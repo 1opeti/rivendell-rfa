@@ -754,7 +754,7 @@ MainObject::Result MainObject::ImportFile(const QString &filename,
     chown(RDCut::pathName(cut->cutName()),import_config->uid(),
 	  import_config->gid());
     chmod(RDCut::pathName(cut->cutName()),
-	  S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+	  S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IWOTH|S_IROTH);
   }
   else {
     PrintLogDateTime(stderr);
