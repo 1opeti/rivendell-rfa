@@ -10727,3 +10727,6 @@
 	'rivendell.spec.in'.
 2016-05-19 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 1.5.2rfa04.
+2016-05-19 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the installation mode of ripcd(8) from 0x0755 to 0x4755
+	in 'rivendell.spec.in'.
