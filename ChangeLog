@@ -10725,3 +10725,5 @@
 2016-05-19 Fred Gleason <fredg@paravelsystems.com>
 	* Changed the httpd package name from 'apache2' to 'httpd' in
 	'rivendell.spec.in'.
+2016-05-19 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.2rfa04.
