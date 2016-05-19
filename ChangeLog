@@ -10722,3 +10722,6 @@
 	'utils/rdimport/rdimport.cpp'.
 	* Changed the permission mode of the meter segment from 0x755 to 0x777
 	in 'cae/cae.cpp'.
+2016-05-19 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the httpd package name from 'apache2' to 'httpd' in
+	'rivendell.spec.in'.

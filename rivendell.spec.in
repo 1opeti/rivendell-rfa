@@ -40,7 +40,7 @@ Requires: rivendell
 %package web
 Summary: Web scripts for the Rivendell Broadcast Automation System
 Group: Productivity/Multimedia/Other
-Requires: rivendell apache2
+Requires: rivendell httpd
 
 
 %package devel
@@ -82,7 +82,7 @@ outputs for a wide variety of external devices.
 
 
 %build
-./configure --prefix=@LOCAL_PREFIX@ --libexecdir=/srv/www/rd-bin
+./configure --prefix=@LOCAL_PREFIX@ --libexecdir=/var/www/rd-bin
 make
 
 
@@ -161,8 +161,8 @@ cp rdlogin/rdlogin_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
 cp rdlogmanager/rdlogmanager_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
 cp utils/rdgpimon/rdgpimon_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
 cp utils/rmlsend/rmlsend_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
-mkdir -p $RPM_BUILD_ROOT/etc/apache2/conf.d
-cp conf/rd-bin.conf $RPM_BUILD_ROOT/etc/apache2/conf.d/
+mkdir -p $RPM_BUILD_ROOT/etc/httpd/conf.d
+cp conf/rd-bin.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/
 mkdir -p $RPM_BUILD_ROOT/etc/init.d
 cp rivendell $RPM_BUILD_ROOT/etc/init.d
 mkdir -p $RPM_BUILD_ROOT/etc/sysconfig
@@ -234,7 +234,7 @@ cp pam_rd/.libs/pam_rd.so $RPM_BUILD_ROOT/@RD_LIB_PATH@/security/
 ldconfig
 mkdir -p -m 777 /var/run/rivendell
 if [ -x %{_bindir}/gtk-update-icon-cache ] ; then
-  %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
+  %{_bindir}/gtk-update-icon-cache --quiet -f %{_datadir}/icons/hicolor || :
 fi
 
 %postun
@@ -243,7 +243,7 @@ if [ -x %{_bindir}/gtk-update-icon-cache ] ; then
 fi
 
 %post web
-/etc/init.d/apache2 restart
+service httpd restart
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -439,7 +439,7 @@ rm -rf $RPM_BUILD_ROOT
 @libexecdir@/redball.png
 @libexecdir@/whiteball.png
 @libexecdir@/progressbar.gif
-/etc/apache2/conf.d/rd-bin.conf
+/etc/httpd/conf.d/rd-bin.conf
 
 %files devel
 @LOCAL_PREFIX@/include/rlm/rlm.h
