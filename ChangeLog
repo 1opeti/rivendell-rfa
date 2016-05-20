@@ -10738,3 +10738,5 @@
 	* Disabled JACK support in 'rivendell-suse.in'.
 2016-05-20 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 1.5.2rfa06.
+2016-05-20 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a typo in 'rivendell-suse.in'.

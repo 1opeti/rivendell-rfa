@@ -73,7 +73,7 @@ function StopDaemons {
   kill `cat /var/run/rdcatchd.pid` > /dev/null 2> /dev/null
   kill `cat /var/run/ripcd.pid` > /dev/null 2> /dev/null
   kill `cat /var/run/caed.pid` > /dev/null 2> /dev/null
-  if [ -n "$JACK_COMMAND" ] ; then
+#  if [ -n "$JACK_COMMAND" ] ; then
 #
 # FIXME
 #  Why are three kill(1) invocations necessary to stop jackd(1)?
