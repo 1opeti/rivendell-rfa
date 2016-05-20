@@ -57,8 +57,8 @@ function StartDaemons {
       fi
     fi
   fi
-  $JACK_COMMAND > /dev/null 2> /dev/null &
-  echo -n $! > /var/run/rivendell/jackd.pid
+#  $JACK_COMMAND > /dev/null 2> /dev/null &
+#  echo -n $! > /var/run/jackd.pid
   ipcrm -M 0x5005 2> /dev/null
   @LOCAL_PREFIX@/bin/caed 2> /dev/null
   sleep 1
@@ -70,28 +70,28 @@ function StartDaemons {
 
 function StopDaemons {
   killall rdimport > /dev/null 2> /dev/null
-  kill `cat /var/run/rivendell/rdcatchd.pid` > /dev/null 2> /dev/null
-  kill `cat /var/run/rivendell/ripcd.pid` > /dev/null 2> /dev/null
-  kill `cat /var/run/rivendell/caed.pid` > /dev/null 2> /dev/null
+  kill `cat /var/run/rdcatchd.pid` > /dev/null 2> /dev/null
+  kill `cat /var/run/ripcd.pid` > /dev/null 2> /dev/null
+  kill `cat /var/run/caed.pid` > /dev/null 2> /dev/null
   if [ -n "$JACK_COMMAND" ] ; then
 #
 # FIXME
 #  Why are three kill(1) invocations necessary to stop jackd(1)?
 #
-    kill `cat /var/run/rivendell/jackd.pid` > /dev/null 2> /dev/null
-    kill `cat /var/run/rivendell/jackd.pid` > /dev/null 2> /dev/null
-    kill `cat /var/run/rivendell/jackd.pid` > /dev/null 2> /dev/null
-    rm -f /var/run/rivendell/jackd.pid
-  fi
+#    kill `cat /var/run/jackd.pid` > /dev/null 2> /dev/null
+#    kill `cat /var/run/jackd.pid` > /dev/null 2> /dev/null
+#    kill `cat /var/run/jackd.pid` > /dev/null 2> /dev/null
+#    rm -f /var/run/jackd.pid
+#  fi
 }
 
 # Set path for script functions
 export PATH=$PATH:/usr/local/bin:/usr/local/sbin
 
 #
-# Make sure that '/var/run/rivendell' exists
+# Make sure that '/var/run' exists
 #
-mkdir -p /var/run/rivendell
+mkdir -p /var/run
 
 #
 # If the LSB Init functions exist, use them, otherwise roll our own
@@ -206,12 +206,12 @@ case "$1" in
 	exit $EXIT_CODE
 	;;
     silent-status)
-	if test -f /var/run/rivendell/caed.pid ; then
-	    if test -d /proc/`cat /var/run/rivendell/caed.pid` ; then
-		if test -f /var/run/rivendell/ripcd.pid ; then
-		    if test -d /proc/`cat /var/run/rivendell/ripcd.pid` ; then
-			if test -f /var/run/rivendell/rdcatchd.pid ; then
-			    if test -d /proc/`cat /var/run/rivendell/rdcatchd.pid` ; then
+	if test -f /var/run/caed.pid ; then
+	    if test -d /proc/`cat /var/run/caed.pid` ; then
+		if test -f /var/run/ripcd.pid ; then
+		    if test -d /proc/`cat /var/run/ripcd.pid` ; then
+			if test -f /var/run/rdcatchd.pid ; then
+			    if test -d /proc/`cat /var/run/rdcatchd.pid` ; then
 				exit 0
 			    fi
 			fi

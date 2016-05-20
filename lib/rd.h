@@ -37,10 +37,10 @@
 /*
  * PID File Locations
  */
-#define RD_PID_DIR "/var/run/rivendell"
-#define RD_CAED_PID "/var/run/rivendell/caed.pid"
-#define RD_RIPCD_PID "/var/run/rivendell/ripcd.pid"
-#define RD_RDCATCHD_PID "/var/run/rivendell/rdcatchd.pid"
+#define RD_PID_DIR "/var/run"
+#define RD_CAED_PID "/var/run/caed.pid"
+#define RD_RIPCD_PID "/var/run/ripcd.pid"
+#define RD_RDCATCHD_PID "/var/run/rdcatchd.pid"
 
 /*
  * Where audio gets stored

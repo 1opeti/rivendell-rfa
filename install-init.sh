@@ -27,8 +27,8 @@ if test ! -f ./building-debian ; then
   cp rivendell /etc/init.d/rivendell
   mkdir -p /etc/sysconfig
   cp rivendell.sys /etc/sysconfig/rivendell
-  mkdir -p /var/run/rivendell
-  chmod 777 /var/run/rivendell
+#  mkdir -p /var/run/rivendell
+#  chmod 777 /var/run/rivendell
   ldconfig
 fi
 
