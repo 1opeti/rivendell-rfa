@@ -10747,3 +10747,5 @@
 	in 'xdg/rivendell-rdcatch.desktop'.
 2016-05-26 Fred Gleason <fredg@paravelsystems.com>
 	* Removed 'rivendel-rdlogin.desktop' from 'rivendell.spec.in'.
+2016-05-26 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.2rfa08.
