@@ -10745,3 +10745,5 @@
 2016-05-26 Fred Gleason <fredg@paravelsystems.com>
 	* Added a '--offline-host-warnings=no' switch to the 'Exec' parameter
 	in 'xdg/rivendell-rdcatch.desktop'.
+2016-05-26 Fred Gleason <fredg@paravelsystems.com>
+	* Removed 'rivendel-rdlogin.desktop' from 'rivendell.spec.in'.

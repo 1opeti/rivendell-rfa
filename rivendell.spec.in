@@ -181,7 +181,6 @@ mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/128x128/apps
 cp icons/rivendell-128x128.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/128x128/apps/rivendell.xpm
 mkdir -p $RPM_BUILD_ROOT/usr/share/applications
 cp xdg/rivendell-rdadmin.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdadmin.desktop
-cp xdg/rivendell-rdlogin.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdlogin.desktop
 cp xdg/rivendell-rdairplay.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdairplay.desktop
 cp xdg/rivendell-rdpanel.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdpanel.desktop
 cp xdg/rivendell-rdcatch.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdcatch.desktop
@@ -232,7 +231,6 @@ cp pam_rd/.libs/pam_rd.so $RPM_BUILD_ROOT/@RD_LIB_PATH@/security/
 
 %post
 ldconfig
-#mkdir -p -m 777 /var/run/rivendell
 if [ -x %{_bindir}/gtk-update-icon-cache ] ; then
   %{_bindir}/gtk-update-icon-cache --quiet -f %{_datadir}/icons/hicolor || :
 fi
@@ -319,7 +317,6 @@ rm -rf $RPM_BUILD_ROOT
 /usr/share/icons/hicolor/64x64/apps/rivendell.xpm
 /usr/share/icons/hicolor/128x128/apps/rivendell.xpm
 /usr/share/applications/rivendell-rdadmin.desktop
-/usr/share/applications/rivendell-rdlogin.desktop
 /usr/share/applications/rivendell-rdairplay.desktop
 /usr/share/applications/rivendell-rdpanel.desktop
 /usr/share/applications/rivendell-rdcatch.desktop
@@ -454,6 +451,8 @@ rm -rf $RPM_BUILD_ROOT
 @LOCAL_PREFIX@/src/rlm/rlm_inno713.c
 
 %changelog
+* Thu May 26 2016 Fred Gleason <fredg@paravelsystems.com>
+-- Removed 'rivendel-rdlogin.desktop'.
 * Mon May 16 2016 Fred Gleason <fredg@paravelsystems.com>
 -- Added a 'sox' dependency.
 * Mon Dec 14 2015 Fred Gleason <fredg@paravelsystems.com>
