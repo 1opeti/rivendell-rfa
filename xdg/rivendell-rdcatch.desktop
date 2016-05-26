@@ -4,7 +4,7 @@ Terminal=false
 Categories=Qt;KDE;Rivendell;
 Name=RDCatch
 GenericName=Rivendell Event Scheduler
-Exec=rdcatch
+Exec=rdcatch --offline-host-warnings=no
 Icon=rivendell
 Type=Application
 Terminal=false

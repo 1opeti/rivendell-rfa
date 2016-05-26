@@ -10742,3 +10742,6 @@
 	* Fixed a typo in 'rivendell-suse.in'.
 2016-05-20 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 1.5.2rfa07.
+2016-05-26 Fred Gleason <fredg@paravelsystems.com>
+	* Added a '--offline-host-warnings=no' switch to the 'Exec' parameter
+	in 'xdg/rivendell-rdcatch.desktop'.
