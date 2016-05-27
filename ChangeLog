@@ -10749,3 +10749,8 @@
 	* Removed 'rivendel-rdlogin.desktop' from 'rivendell.spec.in'.
 2016-05-26 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 1.5.2rfa08.
+2016-05-27 Fred Gleason <fredg@paravelsystems.com>
+	* Reclassed 'MainWidget' to inherit from 'QWidget' instead of
+	'QDialog' in 'rdlibrary/rdlibrary.cpp' and rdlibrary/rdlibrary.h'.
+	* Reclassed 'MainWidget' to inherit from 'QWidget' instead of
+	'QDialog' in 'rdlibrary/rdlogmanager.cpp' and rdlibrary/rdlogmanager.h'.

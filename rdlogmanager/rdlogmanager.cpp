@@ -94,7 +94,7 @@ void SigHandler(int signo)
 
 
 MainWidget::MainWidget(QWidget *parent,const char *name)
-  :QDialog(parent,name)
+  :QWidget(parent,name)
 {
   //
   // HACK: Disable the Broken Custom SuSE Dialogs

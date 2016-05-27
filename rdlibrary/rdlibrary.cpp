@@ -90,7 +90,7 @@ void SigHandler(int signo);
 
 
 MainWidget::MainWidget(QWidget *parent,const char *name)
-  :QDialog(parent,name)
+  :QWidget(parent,name)
 {
   //
   // Ensure We're the Only Instance Running

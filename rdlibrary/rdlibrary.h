@@ -60,7 +60,7 @@
 #define RDLIBRARY_ENFORCE_LENGTH_COLOR blue
 
 
-class MainWidget : public QDialog
+class MainWidget : public QWidget
 {
  Q_OBJECT
  public:

@@ -38,7 +38,7 @@
 #include <rdlog_line.h>
 #include <rdconfig.h>
 
-class MainWidget : public QDialog
+class MainWidget : public QWidget
 {
  Q_OBJECT
  public:
