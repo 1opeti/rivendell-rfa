@@ -190,23 +190,6 @@ MainWidget::MainWidget(QWidget *parent,const char *name,WFlags f)
   rdlogedit_conf=new RDLogeditConf(log_config->stationName());
 
   //
-  // Cart Picker
-  //
-#ifdef WIN32
-  log_cart_dialog=new RDCartDialog(&log_filter,&log_group,-1,-1,0,0,
-				   NULL,NULL,NULL,"",
-				   this,"log_cart_dialog");
-#else
-  log_cart_dialog=new RDCartDialog(&log_filter,&log_group,
-				   rdlogedit_conf->outputCard(),
-				   rdlogedit_conf->outputPort(),
-				   rdlogedit_conf->startCart(),
-				   rdlogedit_conf->endCart(),
-				   rdcae,rdripc,rdstation_conf,"",
-				   this,"log_cart_dialog");
-#endif
-
-  //
   // User
   //
 #ifndef WIN32
@@ -424,7 +407,8 @@ void MainWidget::addData()
     }
     delete q;
     RDCreateLogTable(QString().sprintf("%s_LOG",(const char *)logname));
-    EditLog *editlog=new EditLog(logname,&log_clipboard,&newlogs,this);
+    EditLog *editlog=new EditLog(logname,&log_filter,&log_group,
+				 &log_clipboard,&newlogs,this);
     editlog->exec();
     delete editlog;
     ListListViewItem *item=new ListListViewItem(log_log_list);
@@ -449,7 +433,8 @@ void MainWidget::editData()
   if(item==NULL) {
     return;
   }
-  EditLog *log=new EditLog(item->text(1),&log_clipboard,&newlogs,this);
+  EditLog *log=new EditLog(item->text(1),&log_filter,&log_group,
+			   &log_clipboard,&newlogs,this);
   log->exec();
   delete log;
   RefreshItem(item);

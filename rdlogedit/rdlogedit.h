@@ -38,7 +38,6 @@
 #include <rdripc.h>
 #include <rdlibrary_conf.h>
 #include <rdlog_line.h>
-//#include <rdconfig.h>
 
 #include <list_listviewitem.h>
 
@@ -71,6 +70,8 @@ class MainWidget : public QMainWindow
   QSqlDatabase *log_db;
   QString log_filename;
   QString log_import_path;
+  QString log_filter;
+  QString log_group;
   QLabel *log_user_label;
   int log_card_no;
   int log_stream_no;
@@ -88,8 +89,10 @@ class MainWidget : public QMainWindow
   QPixmap *log_whiteball_map;
   QPixmap *log_greenball_map;
   QPixmap *log_redball_map;
+  /*
   QString log_filter;
   QString log_group;
+  */
 };
 
 

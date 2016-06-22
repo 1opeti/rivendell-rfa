@@ -10754,3 +10754,6 @@
 	'QDialog' in 'rdlibrary/rdlibrary.cpp' and rdlibrary/rdlibrary.h'.
 	* Reclassed 'MainWidget' to inherit from 'QWidget' instead of
 	'QDialog' in 'rdlibrary/rdlogmanager.cpp' and rdlibrary/rdlogmanager.h'.
+2016-06-22 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in RDLogEdit(1) that caused the 'Select Cart' dialog
+	to become hidden.

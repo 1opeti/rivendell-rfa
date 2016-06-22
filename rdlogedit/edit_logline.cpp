@@ -46,9 +46,9 @@ EditLogLine::EditLogLine(RDLogLine *line,QString *filter,QString *group,
 
   setCaption(tr("Edit Log Entry"));
 
-  edit_logline=line;
   edit_filter=filter;
   edit_group=group;
+  edit_logline=line;
   edit_service=svcname;
   edit_group_list=grplist;
 
@@ -63,6 +63,23 @@ EditLogLine::EditLogLine(RDLogLine *line,QString *filter,QString *group,
   normal_font.setPixelSize(12);
   QFont radio_font=QFont("Helvetica",10,QFont::Normal);
   radio_font.setPixelSize(10);
+
+  //
+  // Cart Picker Dialog
+  //
+#ifdef WIN32
+  edit_cart_dialog=new RDCartDialog(edit_filter,edit_group,-1,-1,0,0,
+				   NULL,NULL,NULL,"",
+				   this,"edit_cart_dialog");
+#else
+  edit_cart_dialog=new RDCartDialog(edit_filter,edit_group,
+				    rdlogedit_conf->outputCard(),
+				    rdlogedit_conf->outputPort(),
+				    rdlogedit_conf->startCart(),
+				    rdlogedit_conf->endCart(),
+				    rdcae,rdripc,rdstation_conf,"",
+				    this,"edit_cart_dialog");
+#endif  // WIN32
 
   //
   // Time Type
@@ -269,7 +286,7 @@ void EditLogLine::selectCartData()
   if(!ok) {
     cartnum=-1;
   }
-  if(log_cart_dialog->exec(&cartnum,RDCart::All,&edit_service,1)==0) {
+  if(edit_cart_dialog->exec(&cartnum,RDCart::All,&edit_service,1)==0) {
     FillCart(cartnum);
   }
 }

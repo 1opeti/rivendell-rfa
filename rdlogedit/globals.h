@@ -41,7 +41,7 @@ extern RDUser *rduser;
 extern RDRipc *rdripc;
 extern RDConfig *log_config;
 extern RDLogeditConf *rdlogedit_conf;
-extern RDCartDialog *log_cart_dialog;
+//extern RDCartDialog *log_cart_dialog;
 extern bool import_running;
 #ifndef WIN32
 extern RDCae *rdcae;

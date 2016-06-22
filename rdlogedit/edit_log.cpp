@@ -64,8 +64,9 @@
 #include "../icons/mic16.xpm"
 #include "../icons/traffic.xpm"
 
-EditLog::EditLog(QString logname,vector<RDLogLine> *clipboard,
-		 vector<QString> *new_logs,QWidget *parent,const char *name)
+EditLog::EditLog(QString logname,QString *filter,QString *group,
+		 vector<RDLogLine> *clipboard,vector<QString> *new_logs,
+		 QWidget *parent,const char *name)
   : QDialog(parent,name,true)
 {
   QString sql;
@@ -73,6 +74,8 @@ EditLog::EditLog(QString logname,vector<RDLogLine> *clipboard,
   QStringList services_list;
 
   edit_logname=logname;
+  edit_filter=filter;
+  edit_group=group;
   edit_clipboard=clipboard;
   edit_newlogs=new_logs;
   edit_default_trans=RDLogLine::Play;
@@ -693,7 +696,7 @@ void EditLog::insertCartButtonData()
   edit_log_event->logLine(line)->setFadeupGain(-3000);
   edit_log_event->logLine(line)->setFadedownGain(-3000);
   EditLogLine *edit=new EditLogLine(edit_log_event->logLine(line),
-				    &edit_filter,&edit_group,
+				    edit_filter,edit_group,
 				    edit_service_box->currentText(),
 				    &edit_group_list,this,"edit_logline");
   int ret=edit->exec();
@@ -836,8 +839,8 @@ void EditLog::editButtonData()
   switch(edit_log_event->logLine(line)->type()) {
       case RDLogLine::Cart:
       case RDLogLine::Macro:
-	edit_cart=new EditLogLine(edit_log_event->logLine(line),&
-				  edit_filter,&edit_group,
+	edit_cart=new EditLogLine(edit_log_event->logLine(line),
+				  edit_filter,edit_group,
 				  edit_service_box->currentText(),
 				  &edit_group_list,this,"edit_logline");
 	if(edit_cart->exec()>=0) {

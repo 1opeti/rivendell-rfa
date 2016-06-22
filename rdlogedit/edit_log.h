@@ -54,8 +54,9 @@ class EditLog : public QDialog
 {
  Q_OBJECT
  public:
-  EditLog(QString logname,vector<RDLogLine> *clipboard,
-	  vector<QString> *new_logs,QWidget *parent=0,const char *name=0);
+ EditLog(QString logname,QString *filter,QString *group,
+	 vector<RDLogLine> *clipboard,vector<QString> *new_logs,
+	 QWidget *parent=0,const char *name=0);
   ~EditLog();
   QSize sizeHint() const;
   QSizePolicy sizePolicy() const;
@@ -125,8 +126,8 @@ class EditLog : public QDialog
   QLabel *edit_enddate_label;
   QCheckBox *edit_enddate_box;
   RDListView *edit_log_list;
-  QString edit_filter;
-  QString edit_group;
+  QString *edit_filter;
+  QString *edit_group;
   QPixmap *edit_playout_map;
   QPixmap *edit_macro_map;
   QPixmap *edit_marker_map;
