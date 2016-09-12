@@ -33,8 +33,6 @@
 #include <rdmacro.h>
 #include <rdripc.h>
 
-using namespace std;
-
 class RDMacroEvent : public QObject
 {
   Q_OBJECT
@@ -42,6 +40,7 @@ class RDMacroEvent : public QObject
   RDMacroEvent(RDRipc *ripc=0,QObject *parent=0,const char *name=0);
   RDMacroEvent(QHostAddress addr,RDRipc *ripc=0,
 	       QObject *parent=0,const char *name=0);
+  ~RDMacroEvent();
   int line() const;
   void setLine(int line);
   QTime startTime() const;
@@ -75,7 +74,7 @@ class RDMacroEvent : public QObject
 
  private:
   void ExecList(int line);
-  vector<RDMacro> event_cmds;
+  std::vector<RDMacro *> event_cmds;
   RDRipc *event_ripc;
   QTimer *event_sleep_timer;
   bool event_whole_list;

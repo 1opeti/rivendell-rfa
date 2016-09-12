@@ -53,6 +53,14 @@ RDMacroEvent::RDMacroEvent(QHostAddress addr,RDRipc *ripc,
 }
 
 
+RDMacroEvent::~RDMacroEvent()
+{
+  for(unsigned i=0;i<event_cmds.size();i++) {
+    delete event_cmds[i];
+  }
+}
+
+
 int RDMacroEvent::line() const
 {
   return event_line;
@@ -79,7 +87,7 @@ void RDMacroEvent::setStartTime(QTime time)
 
 RDMacro *RDMacroEvent::command(int line)
 {
-  return &event_cmds.at(line);
+  return event_cmds.at(line);
 }
 
 
@@ -93,7 +101,7 @@ unsigned RDMacroEvent::length() const
 {
   unsigned length=0;
   for(unsigned i=0;i<event_cmds.size();i++) {
-    length+=event_cmds[i].length();
+    length+=event_cmds[i]->length();
   }
   return length;
 }
@@ -116,7 +124,7 @@ bool RDMacroEvent::load(QString str)
       cmd.setRole(RDMacro::Cmd);
       cmd.setAddress(event_address);
       cmd.setEchoRequested(false);
-      event_cmds.push_back(cmd);
+      event_cmds.push_back(new RDMacro(cmd));
       ptr=0;
       cmd.clear();
     }
@@ -150,7 +158,7 @@ QString RDMacroEvent::save()
   char buffer[RD_RML_MAX_LENGTH];
 
   for(unsigned i=0;i<event_cmds.size();i++) {
-    event_cmds[i].generateString(buffer,RD_RML_MAX_LENGTH-1);
+    event_cmds[i]->generateString(buffer,RD_RML_MAX_LENGTH-1);
     str+=QString(buffer);
   }
   return str;
@@ -159,17 +167,17 @@ QString RDMacroEvent::save()
 
 void RDMacroEvent::insert(int line,const RDMacro *cmd)
 {
-  vector<RDMacro>::iterator it=event_cmds.begin()+line;
+  std::vector<RDMacro *>::iterator it=event_cmds.begin()+line;
 
-  event_cmds.insert(it,1,RDMacro());
-  event_cmds.at(line)=*cmd;
+  event_cmds.insert(it,1,new RDMacro(*cmd));
 }
 
 
 void RDMacroEvent::remove(int line)
 {
-  vector<RDMacro>::iterator it=event_cmds.begin()+line;
+  std::vector<RDMacro *>::iterator it=event_cmds.begin()+line;
 
+  delete event_cmds[line];
   event_cmds.erase(it,it+1);
 }
 
@@ -223,14 +231,14 @@ void RDMacroEvent::exec(int line)
   QHostAddress addr;
   RDMacro::Command cmd;
   emit started(line);
-  switch(event_cmds[line].command()) {
+  switch(event_cmds[line]->command()) {
       case RDMacro::SP:   // Sleep
 	event_sleeping_line=line;
-	event_sleep_timer->start(event_cmds[line].arg(0).toInt(),true);
+	event_sleep_timer->start(event_cmds[line]->arg(0).toInt(),true);
 	break;
 
       case RDMacro::CC:   // Send Command
-	stationname=event_cmds[line].arg(0).toString();
+	stationname=event_cmds[line]->arg(0).toString();
 	sql=
 	  QString().sprintf("select VARVALUE from HOSTVARS \
                              where (STATION_NAME=\"%s\")&&(NAME=\"%s\")",
@@ -255,22 +263,22 @@ void RDMacroEvent::exec(int line)
 	  rml.setAddress(addr);
 	}
 	delete station;
-	rml.setArgQuantity(event_cmds[line].argQuantity()-2);
+	rml.setArgQuantity(event_cmds[line]->argQuantity()-2);
 	cmd=
-	  (RDMacro::Command)(256*event_cmds[line].arg(1).toString().ascii()[0]+
-			     event_cmds[line].arg(1).toString().ascii()[1]);
+	  (RDMacro::Command)(256*event_cmds[line]->arg(1).toString().ascii()[0]+
+			     event_cmds[line]->arg(1).toString().ascii()[1]);
 	rml.setCommand(cmd);
 	for(int i=0;i<rml.argQuantity();i++) {
-	  rml.setArg(i,event_cmds[line].arg(i+2));
+	  rml.setArg(i,event_cmds[line]->arg(i+2));
 	}
 	rml.setRole(RDMacro::Cmd);
-	rml.setEchoRequested(event_cmds[line].echoRequested());
+	rml.setEchoRequested(event_cmds[line]->echoRequested());
 	event_ripc->sendRml(&rml);
 	emit finished(line);
 	break;
 
       default:
-	event_ripc->sendRml(&event_cmds[line]);
+	event_ripc->sendRml(event_cmds[line]);
 	emit finished(line);
 	break;
   }
@@ -307,7 +315,7 @@ void RDMacroEvent::ExecList(int line)
     emit started();
   }
   for(unsigned i=line;i<event_cmds.size();i++) {
-    switch(event_cmds[i].command()) {
+    switch(event_cmds[i]->command()) {
 	case RDMacro::SP:  // Sleep
 	  exec(i);
 	  return;
