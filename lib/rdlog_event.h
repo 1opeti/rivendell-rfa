@@ -74,7 +74,7 @@ class RDLogEvent
    QString log_name;
    QString log_service_name;
    int log_max_id;
-   vector<RDLogLine> log_line;
+   vector<RDLogLine *> log_line;
 };
 
 

@@ -10759,3 +10759,6 @@
 	to become hidden.
 2016-06-22 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 1.5.2rfa10.
+2016-09-12 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'lib/rdlog_event.cpp' and 'lib/rdlog_event.h' that
+	caused memory leaks when unloading a log.

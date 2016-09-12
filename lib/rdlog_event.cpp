@@ -43,6 +43,9 @@ RDLogEvent::RDLogEvent(QString name)
 
 RDLogEvent::~RDLogEvent()
 {
+  for(unsigned i=0;i<log_line.size();i++) {
+    delete log_line[i];
+  }
 }
 
 
@@ -413,7 +416,7 @@ from %s left join CART on %s.CART_NUMBER=CART.NUMBER order by COUNT",
 	   q->value(40).toInt());
 */
 
-    log_line.push_back(line);
+    log_line.push_back(new RDLogLine(line));
   }
   delete q;
 
@@ -574,7 +577,7 @@ int RDLogEvent::validate(QString *report,const QDate &date)
 
 void RDLogEvent::refresh(int line)
 {
-  if(log_name.isEmpty()||log_line[line].cartNumber()==0) {
+  if(log_name.isEmpty()||log_line[line]->cartNumber()==0) {
     return;
   }
   QString sql=QString().sprintf("select CART.TYPE,CART.GROUP_NAME,CART.TITLE,\
@@ -588,50 +591,50 @@ void RDLogEvent::refresh(int line)
                                  GROUPS.COLOR from CART left join GROUPS \
                                  on CART.GROUP_NAME=GROUPS.NAME \
                                  where CART.NUMBER=%u",
-				log_line[line].cartNumber());
+				log_line[line]->cartNumber());
   RDSqlQuery *q=new RDSqlQuery(sql);
   if(q->first()) {
     switch((RDCart::Type)q->value(0).toInt()) {
 	case RDCart::Audio:
-	  log_line[line].setType(RDLogLine::Cart);
+	  log_line[line]->setType(RDLogLine::Cart);
 	  break;
 	  
 	case RDCart::Macro:
-	  log_line[line].setType(RDLogLine::Macro);
+	  log_line[line]->setType(RDLogLine::Macro);
 	  break;
 	  
 	default:
 	  break;
     }	
-    log_line[line].
+    log_line[line]->
       setCartType((RDCart::Type)q->value(0).toInt());        // Cart Type
-    log_line[line].setGroupName(q->value(1).toString());       // Group Name
-    log_line[line].setTitle(q->value(2).toString());           // Title
-    log_line[line].setArtist(q->value(3).toString());          // Artist
-    log_line[line].setPublisher(q->value(16).toString());      // Publisher
-    log_line[line].setComposer(q->value(17).toString());       // Composer
-    log_line[line].setAlbum(q->value(4).toString());           // Album
-    log_line[line].setYear(q->value(5).toDate());              // Year
-    log_line[line].setLabel(q->value(6).toString());           // Label
-    log_line[line].setClient(q->value(7).toString());          // Client
-    log_line[line].setAgency(q->value(8).toString());          // Agency
-    log_line[line].setUserDefined(q->value(9).toString());     // User Defined
-    log_line[line].setUsageCode((RDCart::UsageCode)q->value(16).toInt());
-    log_line[line].setForcedLength(q->value(10).toUInt());   // Forced Length
-    log_line[line].setAverageSegueLength(q->value(19).toUInt());
-    log_line[line].setCutQuantity(q->value(11).toUInt());       // Cut Quantity
-    log_line[line].setLastCutPlayed(q->value(12).toUInt());  // Last Cut Played
-    log_line[line].
+    log_line[line]->setGroupName(q->value(1).toString());       // Group Name
+    log_line[line]->setTitle(q->value(2).toString());           // Title
+    log_line[line]->setArtist(q->value(3).toString());          // Artist
+    log_line[line]->setPublisher(q->value(16).toString());      // Publisher
+    log_line[line]->setComposer(q->value(17).toString());       // Composer
+    log_line[line]->setAlbum(q->value(4).toString());           // Album
+    log_line[line]->setYear(q->value(5).toDate());              // Year
+    log_line[line]->setLabel(q->value(6).toString());           // Label
+    log_line[line]->setClient(q->value(7).toString());          // Client
+    log_line[line]->setAgency(q->value(8).toString());          // Agency
+    log_line[line]->setUserDefined(q->value(9).toString());     // User Defined
+    log_line[line]->setUsageCode((RDCart::UsageCode)q->value(16).toInt());
+    log_line[line]->setForcedLength(q->value(10).toUInt());   // Forced Length
+    log_line[line]->setAverageSegueLength(q->value(19).toUInt());
+    log_line[line]->setCutQuantity(q->value(11).toUInt());       // Cut Quantity
+    log_line[line]->setLastCutPlayed(q->value(12).toUInt());  // Last Cut Played
+    log_line[line]->
       setPlayOrder((RDCart::PlayOrder)q->value(13).toUInt()); // Play Order
-    log_line[line].
+    log_line[line]->
       setEnforceLength(RDBool(q->value(14).toString()));     // Enforce Length
-    log_line[line].
+    log_line[line]->
       setPreservePitch(RDBool(q->value(15).toString()));     // Preserve Pitch
-    log_line[line].setValidity((RDCart::Validity)q->value(20).toInt());
-    log_line[line].setGroupColor(q->value(21).toString());  // Group Color
+    log_line[line]->setValidity((RDCart::Validity)q->value(20).toInt());
+    log_line[line]->setGroupColor(q->value(21).toString());  // Group Color
   }
   else {
-    log_line[line].setValidity(RDCart::NeverValid);
+    log_line[line]->setValidity(RDCart::NeverValid);
   }
   delete q;
   return;
@@ -648,27 +651,27 @@ void RDLogEvent::insert(int line,int num_lines,bool preserve_trans)
 {
   if(!preserve_trans) {
     if(line>0) {
-      log_line[line-1].setEndPoint(-1,RDLogLine::LogPointer);
-      log_line[line-1].setSegueStartPoint(-1,RDLogLine::LogPointer);
-      log_line[line-1].setSegueEndPoint(-1,RDLogLine::LogPointer);
+      log_line[line-1]->setEndPoint(-1,RDLogLine::LogPointer);
+      log_line[line-1]->setSegueStartPoint(-1,RDLogLine::LogPointer);
+      log_line[line-1]->setSegueEndPoint(-1,RDLogLine::LogPointer);
     }
     if(line<(size()-1)) {
-      log_line[line].setStartPoint(-1,RDLogLine::LogPointer);
-      log_line[line].setHasCustomTransition(false);
+      log_line[line]->setStartPoint(-1,RDLogLine::LogPointer);
+      log_line[line]->setHasCustomTransition(false);
     }
   }
   if(line<size()) {
-    vector<RDLogLine>::iterator it=log_line.begin()+line;
-    log_line.insert(it,num_lines,RDLogLine());
+    vector<RDLogLine *>::iterator it=log_line.begin()+line;
+    log_line.insert(it,num_lines,new RDLogLine());
     for(int i=line;i<(line+num_lines);i++) {
-      log_line[i].setId(++log_max_id);
+      log_line[i]->setId(++log_max_id);
     }
     return;
   }
   if(line>=size()) {
     for(int i=0;i<num_lines;i++) {
-      log_line.push_back(RDLogLine());
-      log_line.back().setId(++log_max_id);
+      log_line.push_back(new RDLogLine());
+      log_line.back()->setId(++log_max_id);
     }
     return;
   }
@@ -679,16 +682,16 @@ void RDLogEvent::remove(int line,int num_lines,bool preserve_trans)
 {
   if(!preserve_trans) {
   if(line>0) {
-    log_line[line-1].setEndPoint(-1,RDLogLine::LogPointer);
-    log_line[line-1].setSegueStartPoint(-1,RDLogLine::LogPointer);
-    log_line[line-1].setSegueEndPoint(-1,RDLogLine::LogPointer);
+    log_line[line-1]->setEndPoint(-1,RDLogLine::LogPointer);
+    log_line[line-1]->setSegueStartPoint(-1,RDLogLine::LogPointer);
+    log_line[line-1]->setSegueEndPoint(-1,RDLogLine::LogPointer);
   }
   if(line<((int)log_line.size()-num_lines)) {
-    log_line[line+num_lines].setStartPoint(-1,RDLogLine::LogPointer);
-    log_line[line+num_lines].setHasCustomTransition(false);
+    log_line[line+num_lines]->setStartPoint(-1,RDLogLine::LogPointer);
+    log_line[line+num_lines]->setHasCustomTransition(false);
   }
   }  
-  vector<RDLogLine>::iterator it=log_line.begin()+line;
+  vector<RDLogLine *>::iterator it=log_line.begin()+line;
   log_line.erase(it,it+num_lines);
 }
 
@@ -888,15 +891,15 @@ RDLogLine *RDLogEvent::logLine(int line)
   if((line<0)||((unsigned)line>=log_line.size())) {
     return NULL;
   }
-  return &log_line[line];
+  return log_line[line];
 }
 
 
 RDLogLine *RDLogEvent::loglineById(int id)
 {
   for(int i=0;i<size();i++) {
-    if(log_line[i].id()==id) {
-      return &log_line[i];
+    if(log_line[i]->id()==id) {
+      return log_line[i];
     }
   }
   return NULL;
@@ -906,7 +909,7 @@ RDLogLine *RDLogEvent::loglineById(int id)
 int RDLogEvent::lineById(int id) const
 {
   for(int i=0;i<size();i++) {
-    if(log_line[i].id()==id) {
+    if(log_line[i]->id()==id) {
       return i;
     }
   }
@@ -917,8 +920,8 @@ int RDLogEvent::lineById(int id) const
 int RDLogEvent::nextTimeStart(QTime after)
 {
   for(unsigned i=0;i<log_line.size();i++) {
-    if((log_line[i].timeType()==RDLogLine::Hard)&&
-       (log_line[i].startTime(RDLogLine::Logged)>after)) {
+    if((log_line[i]->timeType()==RDLogLine::Hard)&&
+       (log_line[i]->startTime(RDLogLine::Logged)>after)) {
       return i;
     }
   }
@@ -975,8 +978,8 @@ int RDLogEvent::nextId() const
 {
   int id=-1;
   for(int i=0;i<size();i++) {
-    if(log_line[i].id()>id) {
-      id=log_line[i].id();
+    if(log_line[i]->id()>id) {
+      id=log_line[i]->id();
     }
   }
   return id+1;
@@ -987,8 +990,8 @@ int RDLogEvent::nextLinkId() const
 {
   int id=-1;
   for(int i=0;i<size();i++) {
-    if(log_line[i].linkId()>id) {
-      id=log_line[i].linkId();
+    if(log_line[i]->linkId()>id) {
+      id=log_line[i]->linkId();
     }
   }
   return id+1;
@@ -1015,54 +1018,54 @@ void RDLogEvent::SaveLine(int line)
                          LINK_START_SLOP=%d,LINK_END_SLOP=%d,\
                          DUCK_UP_GAIN=%d,DUCK_DOWN_GAIN=%d",
 			(const char *)log_name,
-			log_line[line].id(),
+			log_line[line]->id(),
 			line,
-			log_line[line].cartNumber(),
-			(const char *)log_line[line].
+			log_line[line]->cartNumber(),
+			(const char *)log_line[line]->
 			startTime(RDLogLine::Logged).toString("hh:mm:ss"),
-			(int)log_line[line].timeType(),
-			(int)log_line[line].transType(),
-			log_line[line].startPoint(RDLogLine::LogPointer),
-			log_line[line].endPoint(RDLogLine::LogPointer),
-			log_line[line].segueStartPoint(RDLogLine::LogPointer),
-			log_line[line].segueEndPoint(RDLogLine::LogPointer),
-			log_line[line].type(),
+			(int)log_line[line]->timeType(),
+			(int)log_line[line]->transType(),
+			log_line[line]->startPoint(RDLogLine::LogPointer),
+			log_line[line]->endPoint(RDLogLine::LogPointer),
+			log_line[line]->segueStartPoint(RDLogLine::LogPointer),
+			log_line[line]->segueEndPoint(RDLogLine::LogPointer),
+			log_line[line]->type(),
 			(const char *)
-			RDEscapeString(log_line[line].markerComment()),
+			RDEscapeString(log_line[line]->markerComment()),
 			(const char *)
-			RDEscapeString(log_line[line].markerLabel()),
-			log_line[line].graceTime(),
-			log_line[line].source(),
-			(const char *)log_line[line].extStartTime().
+			RDEscapeString(log_line[line]->markerLabel()),
+			log_line[line]->graceTime(),
+			log_line[line]->source(),
+			(const char *)log_line[line]->extStartTime().
 			toString("hh:mm:ss"),
-			log_line[line].extLength(),
-			(const char *)RDEscapeString(log_line[line].extData()),
+			log_line[line]->extLength(),
+			(const char *)RDEscapeString(log_line[line]->extData()),
 			(const char *)
-			RDEscapeString(log_line[line].extEventId()),
+			RDEscapeString(log_line[line]->extEventId()),
 			(const char *)
-			RDEscapeString(log_line[line].extAnncType()),
+			RDEscapeString(log_line[line]->extAnncType()),
 			(const char *)
-			RDEscapeString(log_line[line].extCartName()),
-			log_line[line].fadeupPoint(RDLogLine::LogPointer),
-			log_line[line].fadeupGain(),
-			log_line[line].fadedownPoint(RDLogLine::LogPointer),
-			log_line[line].fadedownGain(),
-			log_line[line].segueGain(),
+			RDEscapeString(log_line[line]->extCartName()),
+			log_line[line]->fadeupPoint(RDLogLine::LogPointer),
+			log_line[line]->fadeupGain(),
+			log_line[line]->fadedownPoint(RDLogLine::LogPointer),
+			log_line[line]->fadedownGain(),
+			log_line[line]->segueGain(),
 			(const char *)
-			RDEscapeString(log_line[line].linkEventName()),
-			(const char *)log_line[line].linkStartTime().
+			RDEscapeString(log_line[line]->linkEventName()),
+			(const char *)log_line[line]->linkStartTime().
 			toString("hh:mm:ss"),
-			log_line[line].linkLength(),
-			log_line[line].linkId(),
-			(const char *)RDYesNo(log_line[line].linkEmbedded()),
+			log_line[line]->linkLength(),
+			log_line[line]->linkId(),
+			(const char *)RDYesNo(log_line[line]->linkEmbedded()),
 			(const char *)
-			RDEscapeString(log_line[line].originUser()),
-			(const char *)log_line[line].originDateTime().
+			RDEscapeString(log_line[line]->originUser()),
+			(const char *)log_line[line]->originDateTime().
 			toString("yyyy-MM-dd hh:mm:ss"),
-			log_line[line].linkStartSlop(),
-			log_line[line].linkEndSlop(),
-                        log_line[line].duckUpGain(),
-                        log_line[line].duckDownGain());
+			log_line[line]->linkStartSlop(),
+			log_line[line]->linkEndSlop(),
+                        log_line[line]->duckUpGain(),
+                        log_line[line]->duckDownGain());
 
   // printf("SQL: %s\n",(const char *)sql);
   q=new RDSqlQuery(sql);
@@ -1087,8 +1090,8 @@ void RDLogEvent::LoadNowNext()
 
   for(unsigned i=0;i<log_line.size();i++) {
     for(unsigned j=0;j<groups.size();j++) {
-      if(log_line[i].groupName()==groups[j]) {
-	log_line[i].setNowNextEnabled(now_nexts[j]);
+      if(log_line[i]->groupName()==groups[j]) {
+	log_line[i]->setNowNextEnabled(now_nexts[j]);
       }
     }
   }
