@@ -237,6 +237,14 @@ RDSoundPanel::RDSoundPanel(int cols,int rows,int station_panels,
 }
 
 
+RDSoundPanel::~RDSoundPanel()
+{
+  for(unsigned i=0;i<panel_buttons.size();i++) {
+    delete panel_buttons[i];
+  }
+}
+
+
 QSize RDSoundPanel::sizeHint() const
 {
   return QSize(panel_button_columns*(PANEL_BUTTON_SIZE_X+15),
