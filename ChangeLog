@@ -10769,3 +10769,5 @@
 2016-09-12 Fred Gleason <fredg@paravelsystems.com>
 	* Fixed a bug in 'lib/rdmacro_event.cpp' and 'lib/rdmacro_event.h'
 	that caused memory leaks when executing a macro cart.
+2016-09-12 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.2rfa11.
