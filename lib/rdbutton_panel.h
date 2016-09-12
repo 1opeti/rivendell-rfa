@@ -47,6 +47,7 @@ class RDButtonPanel
  public:
   RDButtonPanel(int cols,int rows,RDStation *station,bool flash,
 		QWidget *parent);
+  ~RDButtonPanel();
   QSize sizeHint() const;
   QSizePolicy sizePolicy() const;
   RDPanelButton *panelButton(int row,int col) const;

@@ -61,6 +61,7 @@ class RDSoundPanel : public QWidget
 	       RDEventPlayer *player,RDRipc *ripc,RDCae *cae,
 	       RDStation *station,RDCartDialog *cart_dialog,
 	       QWidget *parent=0,const char *name=0);
+  ~RDSoundPanel();
   QSize sizeHint() const;
   QSizePolicy sizePolicy() const;
   int card(int outnum) const;
@@ -139,7 +140,7 @@ class RDSoundPanel : public QWidget
   void ClearReset();
   QString PanelTag(int index);
   QString PanelOwner(RDAirPlayConf::PanelType type);
-  std::vector<RDButtonPanel> panel_buttons;
+  std::vector<RDButtonPanel *> panel_buttons;
   RDCae *panel_cae;
   RDUser *panel_user;
   RDComboBox *panel_selector_box;

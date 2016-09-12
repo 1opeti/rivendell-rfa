@@ -115,13 +115,13 @@ RDSoundPanel::RDSoundPanel(int cols,int rows,int station_panels,
   if(panel_station_panels>0) {
     panel_number=0;
     panel_type=RDAirPlayConf::StationPanel;
-    panel_buttons[0].show();
+    panel_buttons[0]->show();
   }
   else {
     if(panel_user_panels>0) {
       panel_number=0;
       panel_type=RDAirPlayConf::UserPanel;
-      panel_buttons[0].show();
+      panel_buttons[0]->show();
     }
     else {
       setDisabled(true);
@@ -314,7 +314,7 @@ void RDSoundPanel::setButton(RDAirPlayConf::PanelType type,int panel,
   QString str;
 
   RDPanelButton *button=
-    panel_buttons[PanelOffset(type,panel)].panelButton(row,col);
+    panel_buttons[PanelOffset(type,panel)]->panelButton(row,col);
   if(button->playDeck()!=NULL) {
     return;
   }
@@ -389,14 +389,14 @@ void RDSoundPanel::duckVolume(RDAirPlayConf::PanelType type,int panel,int row,in
     for(int i=0;i<panel_button_columns;i++) {
 	    for(int j=0;j<panel_button_rows;j++) {
       RDPlayDeck *deck=
-        panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->playDeck();
+        panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->playDeck();
       if((row==j || row==-1) && (col==i || col==-1)) {
 	if(mport==-1) {
-	  panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->setDuckVolume(level);
+	  panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->setDuckVolume(level);
 	}    
         if(deck!=NULL) {
           if(edit_mport==-1 || 
-             edit_mport==panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->
+             edit_mport==panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->
                      outputText().toInt()) {
 	    deck->duckVolume(level,fade);
           }
@@ -446,10 +446,10 @@ void RDSoundPanel::setActionMode(RDAirPlayConf::ActionMode mode)
       if(i<(unsigned)panel_station_panels &&
           (!panel_config_panels) &&   
           (mode==RDAirPlayConf::AddTo || mode==RDAirPlayConf::CopyTo || mode==RDAirPlayConf::DeleteFrom)) {
-        panel_buttons[i].setActionMode(RDAirPlayConf::Normal);
+        panel_buttons[i]->setActionMode(RDAirPlayConf::Normal);
         }
       else {
-        panel_buttons[i].setActionMode(panel_action_mode);
+        panel_buttons[i]->setActionMode(panel_action_mode);
         }
       }
     }
@@ -494,7 +494,7 @@ void RDSoundPanel::changeUser()
   panel_user=new RDUser(panel_ripc->user());
   panel_config_panels=panel_user->configPanels();
   LoadPanels();
-  panel_buttons[PanelOffset(panel_type,panel_number)].show();
+  panel_buttons[PanelOffset(panel_type,panel_number)]->show();
 
   //
   // Remove Old Panel Names
@@ -547,7 +547,7 @@ void RDSoundPanel::tickClock()
 
 void RDSoundPanel::panelActivatedData(int n)
 {
-  panel_buttons[PanelOffset(panel_type,panel_number)].hide();
+  panel_buttons[PanelOffset(panel_type,panel_number)]->hide();
   if(n<panel_station_panels) {
     panel_type=RDAirPlayConf::StationPanel;
     panel_number=n;
@@ -556,7 +556,7 @@ void RDSoundPanel::panelActivatedData(int n)
     panel_type=RDAirPlayConf::UserPanel;
     panel_number=n-panel_station_panels;
   }
-  panel_buttons[PanelOffset(panel_type,panel_number)].show();
+  panel_buttons[PanelOffset(panel_type,panel_number)]->show();
 }
 
 
@@ -615,14 +615,14 @@ void RDSoundPanel::buttonMapperData(int id)
 
   switch(panel_action_mode) {
       case RDAirPlayConf::CopyFrom:
-	if((cartnum=panel_buttons[PanelOffset(panel_type,panel_number)].
+	if((cartnum=panel_buttons[PanelOffset(panel_type,panel_number)]->
 	    panelButton(row,col)->cart())>0) {
 	  emit selectClicked(cartnum,0,0);
 	}
 	break;
 	
       case RDAirPlayConf::CopyTo:
-         if(panel_buttons[PanelOffset(panel_type,panel_number)].
+         if(panel_buttons[PanelOffset(panel_type,panel_number)]->
 	    panelButton(row,col)->playDeck()==NULL
              && ((panel_type==RDAirPlayConf::UserPanel) || 
 		 panel_config_panels)) { 
@@ -631,7 +631,7 @@ void RDSoundPanel::buttonMapperData(int id)
 	break;
 	
       case RDAirPlayConf::AddTo:
-         if(panel_buttons[PanelOffset(panel_type,panel_number)].
+         if(panel_buttons[PanelOffset(panel_type,panel_number)]->
 	    panelButton(row,col)->playDeck()==NULL
              && ((panel_type==RDAirPlayConf::UserPanel) || 
 		 panel_config_panels)) { 
@@ -640,7 +640,7 @@ void RDSoundPanel::buttonMapperData(int id)
 	break;
 	
       case RDAirPlayConf::DeleteFrom:
-         if(panel_buttons[PanelOffset(panel_type,panel_number)].
+         if(panel_buttons[PanelOffset(panel_type,panel_number)]->
 	    panelButton(row,col)->playDeck()==NULL
              && ((panel_type==RDAirPlayConf::UserPanel) || 
 		 panel_config_panels)) { 
@@ -656,7 +656,7 @@ void RDSoundPanel::buttonMapperData(int id)
 	    return;
 	  }
 	  if(panel_button_dialog->
-	     exec(panel_buttons[PanelOffset(panel_type,panel_number)].
+	     exec(panel_buttons[PanelOffset(panel_type,panel_number)]->
 		  panelButton(row,col),panel_playmode_box->currentItem()==1)
 	     ==0) {
 	    SaveButton(panel_type,panel_number,row,col);
@@ -664,7 +664,7 @@ void RDSoundPanel::buttonMapperData(int id)
 	}
 	else {
 	  RDPanelButton *button=
-	    panel_buttons[PanelOffset(panel_type,panel_number)].
+	    panel_buttons[PanelOffset(panel_type,panel_number)]->
 	    panelButton(row,col);
 	  RDPlayDeck *deck=button->playDeck();
 	  if(panel_reset_mode) {
@@ -799,9 +799,9 @@ void RDSoundPanel::PlayButton(RDAirPlayConf::PanelType type,int panel,
   
   for(int i=0;i<panel_button_columns;i++) {
     for(int j=0;j<panel_button_rows;j++) {
-      if(panel_buttons[PanelOffset(type,panel)].
+      if(panel_buttons[PanelOffset(type,panel)]->
 	 panelButton(j,i)->cart()>0 && 
-         panel_buttons[PanelOffset(type,panel)].
+         panel_buttons[PanelOffset(type,panel)]->
 	 panelButton(j,i)->state()==false) {
         if(edit_col==-1 || col==i) {
 	  edit_col=i;
@@ -817,7 +817,7 @@ void RDSoundPanel::PlayButton(RDAirPlayConf::PanelType type,int panel,
   }
   
   RDPanelButton *button=
-    panel_buttons[PanelOffset(type,panel)].panelButton(edit_row,edit_col);
+    panel_buttons[PanelOffset(type,panel)]->panelButton(edit_row,edit_col);
   RDPlayDeck *deck=button->playDeck();
   if(deck!=NULL) {
     deck->play(deck->currentPosition());
@@ -983,13 +983,13 @@ void RDSoundPanel::PauseButton(RDAirPlayConf::PanelType type,int panel,
 	for(int i=0;i<panel_button_columns;i++) {
 		for(int j=0;j<panel_button_rows;j++) {
       RDPlayDeck *deck=
-        panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->playDeck();
+        panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->playDeck();
       if(deck!=NULL && (row==j || row==-1) && (col==i || col==-1)) {
         if(mport==-1 || 
-           mport==panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->outputText().toInt()) {
+           mport==panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->outputText().toInt()) {
           deck->pause();
 
-          panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->
+          panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->
              setStartTime(QTime());
           }
        }
@@ -1009,18 +1009,18 @@ void RDSoundPanel::StopButton(RDAirPlayConf::PanelType type,int panel,
     for(int i=0;i<panel_button_columns;i++) {
 	    for(int j=0;j<panel_button_rows;j++) {
       RDPlayDeck *deck=
-        panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->playDeck();
+        panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->playDeck();
       if((row==j || row==-1) && (col==i || col==-1)) {
         if(deck!=NULL) {
           if(edit_mport==-1 || 
-             edit_mport==panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->
+             edit_mport==panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->
                      outputText().toInt()) {
             if(panel_pause_enabled) {
-              panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->
+              panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->
                     setPauseWhenFinished(pause_when_finished);
               }
             else {
-              panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->
+              panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->
                     setPauseWhenFinished(false);
               }
             switch(deck->state()) {
@@ -1040,10 +1040,10 @@ void RDSoundPanel::StopButton(RDAirPlayConf::PanelType type,int panel,
         }
       else {
         if(!pause_when_finished && panel_pause_enabled) {
-          panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->setState(false); 
-          panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->
+          panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->setState(false); 
+          panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->
               setPauseWhenFinished(false); 
-          panel_buttons[PanelOffset(type,panel)].panelButton(j,i)->reset(); 
+          panel_buttons[PanelOffset(type,panel)]->panelButton(j,i)->reset(); 
           }
         }
       }
@@ -1090,28 +1090,28 @@ void RDSoundPanel::LoadPanels()
   // Load Buttons
   //
   for(int i=0;i<panel_station_panels;i++) {
-    panel_buttons.push_back(RDButtonPanel(panel_button_columns,
-					  panel_button_rows,
-					  panel_station,panel_flash,this));
+    panel_buttons.push_back(new RDButtonPanel(panel_button_columns,
+					      panel_button_rows,
+					      panel_station,panel_flash,this));
     for(int j=0;j<panel_button_rows;j++) {
       for(int k=0;k<panel_button_columns;k++) {
-	connect(panel_buttons.back().panelButton(j,k),SIGNAL(clicked()),
+	connect(panel_buttons.back()->panelButton(j,k),SIGNAL(clicked()),
 		panel_mapper,SLOT(map()));
-	panel_mapper->setMapping(panel_buttons.back().panelButton(j,k),
+	panel_mapper->setMapping(panel_buttons.back()->panelButton(j,k),
 			   j*panel_button_columns+k);
       }
     }
     LoadPanel(RDAirPlayConf::StationPanel,i);
   }
   for(int i=0;i<panel_user_panels;i++) {
-    panel_buttons.push_back(RDButtonPanel(panel_button_columns,
-					  panel_button_rows,
-					  panel_station,panel_flash,this));
+    panel_buttons.push_back(new RDButtonPanel(panel_button_columns,
+					      panel_button_rows,
+					      panel_station,panel_flash,this));
     for(int j=0;j<panel_button_rows;j++) {
       for(int k=0;k<panel_button_columns;k++) {
-	connect(panel_buttons.back().panelButton(j,k),SIGNAL(clicked()),
+	connect(panel_buttons.back()->panelButton(j,k),SIGNAL(clicked()),
 		panel_mapper,SLOT(map()));
-	panel_mapper->setMapping(panel_buttons.back().panelButton(j,k),
+	panel_mapper->setMapping(panel_buttons.back()->panelButton(j,k),
 			   j*panel_button_columns+k);
       }
     }
@@ -1163,44 +1163,44 @@ void RDSoundPanel::LoadPanel(RDAirPlayConf::PanelType type,int panel)
 				(const char *)panel_tablename);
   RDSqlQuery *q=new RDSqlQuery(sql);
   while(q->next()) {
-    if(panel_buttons[offset].panelButton(q->value(0).toInt(),
+    if(panel_buttons[offset]->panelButton(q->value(0).toInt(),
 	      q->value(1).toInt())->playDeck()==NULL) {
-      panel_buttons[offset].
+      panel_buttons[offset]->
 	panelButton(q->value(0).toInt(),q->value(1).toInt())->
 	setText(q->value(2).toString());
-      panel_buttons[offset].
+      panel_buttons[offset]->
 	panelButton(q->value(0).toInt(),q->value(1).toInt())->
 	setCart(q->value(3).toInt());
-      panel_buttons[offset].
+      panel_buttons[offset]->
 	panelButton(q->value(0).toInt(),q->value(1).toInt())->
 	setLength(false,q->value(5).toInt());
-      panel_buttons[offset].
+      panel_buttons[offset]->
 	panelButton(q->value(0).toInt(),q->value(1).toInt())->
 	setLength(true,q->value(6).toInt());
       if((panel_playmode_box!=NULL)&&(panel_playmode_box->currentItem()==1)&&
 	 (q->value(6).toUInt()>0)) {
-	panel_buttons[offset].
+	panel_buttons[offset]->
 	  panelButton(q->value(0).toInt(),q->value(1).toInt())->
 	  setActiveLength(q->value(6).toInt());
       }
       else {
-	panel_buttons[offset].
+	panel_buttons[offset]->
 	  panelButton(q->value(0).toInt(),q->value(1).toInt())->
 	  setActiveLength(q->value(5).toInt());
       }
       if(q->value(4).toString().isEmpty()) {
-	panel_buttons[offset].
+	panel_buttons[offset]->
 	  panelButton(q->value(0).toInt(),q->value(1).toInt())->
 	  setColor(palette().active().background());
-	panel_buttons[offset].
+	panel_buttons[offset]->
 	  panelButton(q->value(0).toInt(),q->value(1).toInt())->
 	  setDefaultColor(palette().active().background());
       }
       else {
-	panel_buttons[offset].
+	panel_buttons[offset]->
 	  panelButton(q->value(0).toInt(),q->value(1).toInt())->
 	  setColor(QColor(q->value(4).toString()));
-	panel_buttons[offset].
+	panel_buttons[offset]->
 	  panelButton(q->value(0).toInt(),q->value(1).toInt())->
 	  setDefaultColor(QColor(q->value(4).toString()));
       }
@@ -1252,12 +1252,12 @@ void RDSoundPanel::SaveButton(RDAirPlayConf::PanelType type,
     CART=%d,DEFAULT_COLOR=\"%s\" where (TYPE=%d)&&(OWNER=\"%s\")&&\
     (PANEL_NO=%d)&&(ROW_NO=%d)&&(COLUMN_NO=%d)",
 			   (const char *)panel_tablename,
-			   (const char *)RDEscapeString(panel_buttons[offset].
+			   (const char *)RDEscapeString(panel_buttons[offset]->
 							panelButton(row,col)->
 							text().utf8()),
-			   panel_buttons[PanelOffset(panel_type,panel_number)].
+			   panel_buttons[PanelOffset(panel_type,panel_number)]->
 			   panelButton(row,col)->cart(),
-			   (const char *)panel_buttons[offset].
+			   (const char *)panel_buttons[offset]->
 			   panelButton(row,col)->defaultColor().
 			   name(),
 			   type,
@@ -1287,12 +1287,12 @@ void RDSoundPanel::SaveButton(RDAirPlayConf::PanelType type,
 			   panel,
 			   row,
 			   col,
-			   (const char *)RDEscapeString(panel_buttons[offset].
+			   (const char *)RDEscapeString(panel_buttons[offset]->
 							panelButton(row,col)->
 							text().utf8()),
-			   panel_buttons[PanelOffset(panel_type,panel_number)].
+			   panel_buttons[PanelOffset(panel_type,panel_number)]->
 			   panelButton(row,col)->cart(),
-			   (const char *)panel_buttons[offset].
+			   (const char *)panel_buttons[offset]->
 			   panelButton(row,col)->
 			   defaultColor().name());
     q=new RDSqlQuery(sql1);

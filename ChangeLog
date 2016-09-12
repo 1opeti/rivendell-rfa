@@ -10762,3 +10762,7 @@
 2016-09-12 Fred Gleason <fredg@paravelsystems.com>
 	* Fixed a bug in 'lib/rdlog_event.cpp' and 'lib/rdlog_event.h' that
 	caused memory leaks when unloading a log.
+2016-09-12 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed bugs in 'lib/rdsound_panel.cpp', 'lib/rdsound_panel.h',
+	'lib/rdbutton_panel.cpp' and 'lib/rdbutton_panel.h' that caused memory
+	leaks when changing the active user.

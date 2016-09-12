@@ -48,6 +48,16 @@ RDButtonPanel::RDButtonPanel(int cols,int rows,RDStation *station,bool flash,
 }
 
 
+RDButtonPanel::~RDButtonPanel()
+{
+  for(int i=0;i<panel_button_rows;i++) {
+    for(int j=0;j<panel_button_columns;j++) {
+      delete panel_button[i][j];
+    }
+  }
+}
+
+
 QSize RDButtonPanel::sizeHint() const
 {
   return QSize(500,535);
