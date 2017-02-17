@@ -10779,3 +10779,5 @@
 2017-02-17 Fred Gleason <fredg@paravelsystems.com>
 	* Modified 'configure.ac' and 'rivendell.spec.in' to support
 	building RPMs without HPI support.
+2017-02-17 Fred Gleason <fredg@paravelsystems.com>
+	* Replaced 'get_distro.sh' with 'get_distro.pl'.

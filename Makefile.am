@@ -94,7 +94,7 @@ EXTRA_DIST = autogen.sh SupportedCards ToDo rivendell-suse.in\
              rivendell.spec.in rivendell.sys rivendell.pro rivendell-gentoo\
              install-init.sh make_slack.in slack-desc.in slack_doinst.sh\
              CODINGSTYLE PACKAGE_VERSION build_win32.bat rivendell.ism\
-             get_target.sh get_distro.sh
+             get_target.sh get_distro.pl
 
 CLEANFILES = *~ *.tar.gz *.tgz *.mo *.rpm *.zip
 DISTCLEANFILES = rivendell.spec rivendell make_slack slack-desc ltmain.sh config.guess config.sub
