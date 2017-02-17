@@ -31,9 +31,24 @@ all:	$(RLM_MODULES)
 %.rlm:	%.c
 	$(CC) $(AM_CFLAGS) -I$(top_srcdir) -shared $< -o $@
 
-install:	all
+install-exec-local:	all
 	mkdir -p $(DESTDIR)$(prefix)/@RD_LIB_PATH@/rivendell
 	cp $(RLM_MODULES) $(DESTDIR)$(prefix)/@RD_LIB_PATH@/rivendell/
+	mkdir -p $(DESTDIR)$(headerdir)
+	cp rlm.h $(DESTDIR)$(headerdir)
+	mkdir -p $(DESTDIR)$(prefix)/src/rlm
+	cp *.c $(DESTDIR)$(prefix)/src/rlm/
+	cp Makefile-example $(DESTDIR)$(prefix)/src/rlm/Makefile
+
+uninstall-local:	
+	rm -f $(DESTDIR)$(prefix)/@RD_LIB_PATH@/rivendell/rlm_test.rlm
+	rm -f $(DESTDIR)$(prefix)/@RD_LIB_PATH@/rivendell/rlm_serial.rlm
+	rm -f $(DESTDIR)$(prefix)/@RD_LIB_PATH@/rivendell/rlm_xmpad.rlm
+	rm -f $(DESTDIR)$(prefix)/@RD_LIB_PATH@/rivendell/rlm_udp.rlm
+	rm -f $(DESTDIR)$(prefix)/@RD_LIB_PATH@/rivendell/rlm_twitter.rlm
+	rm -f $(DESTDIR)$(prefix)/@RD_LIB_PATH@/rivendell/rlm_facebook.rlm
+	rm -f $(DESTDIR)$(prefix)/@RD_LIB_PATH@/rivendell/rlm_ando.rlm
+	rm -f $(DESTDIR)$(prefix)/@RD_LIB_PATH@/rivendell/rlm_inno713.rlm
 
 headerdir = $(includedir)/rlm
 header_HEADERS = rlm.h

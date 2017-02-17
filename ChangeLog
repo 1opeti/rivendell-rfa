@@ -10771,3 +10771,8 @@
 	that caused memory leaks when executing a macro cart.
 2016-09-12 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 1.5.2rfa11.
+2017-02-17 Fred Gleason <fredg@paravelsystems.com>
+	* Modified 'rivendell.spec.in' to use 'make install'.
+	* Added 'icons/rivendell-16x16.png', 'icons/rivendell-22x22.png',
+	'icons/rivendell-32x32.png', 'icons/rivendell-48x48.png',
+	'icons/rivendell-64x64.png' and 'icons/rivendell-128x128.png'.

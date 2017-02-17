@@ -82,152 +82,17 @@ outputs for a wide variety of external devices.
 
 
 %build
-./configure --prefix=@LOCAL_PREFIX@ --libexecdir=/var/www/rd-bin
+%configure --libexecdir=/var/www/rd-bin
 make
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@
-cp lib/.libs/librd-@VERSION@.so $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/
-ln -s @LOCAL_PREFIX@/@RD_LIB_PATH@/librd-@VERSION@.so $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/librd.so
-cp lib/.libs/librd.a $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/
-cp lib/.libs/librd.la $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/
-cp rdhpi/.libs/librdhpi-@VERSION@.so $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/
-ln -s @LOCAL_PREFIX@/@RD_LIB_PATH@/librdhpi-@VERSION@.so $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/librdhpi.so
-cp rdhpi/.libs/librdhpi.a $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/
-cp rdhpi/.libs/librdhpi.la $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/
-mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin
-cp cae/.libs/caed $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp rdadmin/.libs/rdadmin $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp rdairplay/.libs/rdairplay $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp rdpanel/.libs/rdpanel $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp rdcatch/.libs/rdcatch $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp rdcatchd/.libs/rdcatchd $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp utils/rdgen/rdgen $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp rdlibrary/.libs/rdlibrary $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp rdlogedit/.libs/rdlogedit $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp rdlogmanager/.libs/rdlogmanager $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp rdcastmanager/.libs/rdcastmanager $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp rdlogin/.libs/rdlogin $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp utils/rmlsend/.libs/rmlsend $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp utils/rdsoftkeys/.libs/rdsoftkeys $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp utils/rdpopup/.libs/rdpopup $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp utils/rdgpimon/.libs/rdgpimon $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp utils/rdfilewrite/.libs/rdfilewrite $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp utils/rdimport/.libs/rdimport $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp utils/rdhpiinfo/.libs/rdhpiinfo $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp utils/rdalsaconfig/.libs/rdalsaconfig $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp utils/rdpurgecasts/.libs/rdpurgecasts $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp utils/rdmaint/.libs/rdmaint $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp utils/rdaconvert/.libs/rdaconvert $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp scripts/rd_rip_cd $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp scripts/rd_import_file $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp scripts/rd_export_file $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp scripts/rd_audio_sync $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp scripts/rd_config $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp ripcd/.libs/ripcd $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp toolame/toolame $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp importers/.libs/wings_filter $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp importers/.libs/rivendell_filter $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp importers/.libs/sas_filter $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp scripts/crc-unity4k.sh $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp importers/.libs/rdcatch_copy $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-cp importers/.libs/panel_copy $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
-mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin
-cp utils/sas_shim/.libs/sas_shim $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/
-cp utils/rddbcheck/.libs/rddbcheck $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/
-mkdir -p $RPM_BUILD_ROOT@libexecdir@
-cp web/rdfeed/.libs/rdfeed.xml $RPM_BUILD_ROOT@libexecdir@/
-cp web/rdcastmanager/.libs/rdcastmanager.cgi $RPM_BUILD_ROOT@libexecdir@/
-cat web/rdcastmanager/rdcastmanager.js | helpers/jsmin > $RPM_BUILD_ROOT@libexecdir@/rdcastmanager.js
-ln -s @libexecdir@/rdfeed.xml $RPM_BUILD_ROOT@libexecdir@/rdfeed.mp3
-cp icons/greencheckmark.png $RPM_BUILD_ROOT@libexecdir@/
-cp icons/redx.png $RPM_BUILD_ROOT@libexecdir@/
-cp icons/greenball.png $RPM_BUILD_ROOT@libexecdir@/
-cp icons/redball.png $RPM_BUILD_ROOT@libexecdir@/
-cp icons/whiteball.png $RPM_BUILD_ROOT@libexecdir@/
-cp icons/progressbar.gif $RPM_BUILD_ROOT@libexecdir@/
-mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs
-cp lib/librd_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
-cp rdadmin/rdadmin_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
-cp rdairplay/rdairplay_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
-cp rdpanel/rdpanel_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
-cp rdcatch/rdcatch_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
-cp rdlibrary/rdlibrary_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
-cp rdlogedit/rdlogedit_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
-cp rdlogin/rdlogin_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
-cp rdlogmanager/rdlogmanager_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
-cp utils/rdgpimon/rdgpimon_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
-cp utils/rmlsend/rmlsend_es.qm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/srlabs/
-mkdir -p $RPM_BUILD_ROOT/etc/httpd/conf.d
-cp conf/rd-bin.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/
-mkdir -p $RPM_BUILD_ROOT/etc/init.d
-cp rivendell $RPM_BUILD_ROOT/etc/init.d
-mkdir -p $RPM_BUILD_ROOT/etc/sysconfig
-cp rivendell.sys $RPM_BUILD_ROOT/etc/sysconfig/rivendell
-mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/16x16/apps
-cp icons/rivendell-16x16.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/16x16/apps/rivendell.xpm
-mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/22x22/apps
-cp icons/rivendell-22x22.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/22x22/apps/rivendell.xpm
-mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/32x32/apps
-cp icons/rivendell-32x32.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/32x32/apps/rivendell.xpm
-mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/48x48/apps
-cp icons/rivendell-48x48.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/48x48/apps/rivendell.xpm
-mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/64x64/apps
-cp icons/rivendell-64x64.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/64x64/apps/rivendell.xpm
-mkdir -p $RPM_BUILD_ROOT/usr/share/icons/hicolor/128x128/apps
-cp icons/rivendell-128x128.xpm $RPM_BUILD_ROOT/usr/share/icons/hicolor/128x128/apps/rivendell.xpm
-mkdir -p $RPM_BUILD_ROOT/usr/share/applications
-cp xdg/rivendell-rdadmin.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdadmin.desktop
-cp xdg/rivendell-rdairplay.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdairplay.desktop
-cp xdg/rivendell-rdpanel.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdpanel.desktop
-cp xdg/rivendell-rdcatch.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdcatch.desktop
-cp xdg/rivendell-rdgpimon.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdgpimon.desktop
-cp xdg/rivendell-rdhpiinfo-root.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdhpiinfo-root.desktop
-cp xdg/rivendell-rdalsaconfig-root.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdalsaconfig-root.desktop
-cp xdg/rivendell-rdlibrary.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdlibrary.desktop
-cp xdg/rivendell-rdlogedit.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdlogedit.desktop
-cp xdg/rivendell-rdlogmanager.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdlogmanager.desktop
-cp xdg/rivendell-rdcastmanager.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdcastmanager.desktop
-cp xdg/rivendell-rmlsend.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rmlsend.desktop
-cp xdg/rivendell-rdsoftkeys.desktop $RPM_BUILD_ROOT/usr/share/applications/rivendell-rdsoftkeys.desktop
-mkdir -p $RPM_BUILD_ROOT/etc/xdg/menus/applications-merged
-cp xdg/rivendell-rivendell.menu $RPM_BUILD_ROOT/etc/xdg/menus/applications-merged/
-mkdir -p $RPM_BUILD_ROOT/etc/security/console.apps
-cp xdg/rdalsaconfig-root-consolehelper $RPM_BUILD_ROOT/etc/security/console.apps/rdalsaconfig-root
-cp xdg/rdhpiinfo-root-consolehelper $RPM_BUILD_ROOT/etc/security/console.apps/rdhpiinfo-root
-mkdir -p $RPM_BUILD_ROOT/etc/pam.d
-cp xdg/rdalsaconfig-root-pam $RPM_BUILD_ROOT/etc/pam.d/rdalsaconfig-root
-cp xdg/rdhpiinfo-root-pam $RPM_BUILD_ROOT/etc/pam.d/rdhpiinfo-root
-mkdir -p $RPM_BUILD_ROOT/usr/share/desktop-directories
-cp xdg/*.directory $RPM_BUILD_ROOT/usr/share/desktop-directories/
+make install DESTDIR=$RPM_BUILD_ROOT
 mkdir $RPM_BUILD_ROOT/.qt
 touch $RPM_BUILD_ROOT/.qt/qt
-mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell
-cp rlm/rlm_test.rlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell/
-cp rlm/rlm_serial.rlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell/
-cp rlm/rlm_twitter.rlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell/
-cp rlm/rlm_facebook.rlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell/
-cp rlm/rlm_udp.rlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell/
-cp rlm/rlm_xmpad.rlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell/
-cp rlm/rlm_ando.rlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell/
-cp rlm/rlm_inno713.rlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell/
-mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/include/rlm
-cp rlm/rlm.h $RPM_BUILD_ROOT@LOCAL_PREFIX@/include/rlm/
-mkdir -p $RPM_BUILD_ROOT/@LOCAL_PREFIX@/src/rlm
-cp rlm/Makefile-example $RPM_BUILD_ROOT/@LOCAL_PREFIX@/src/rlm/Makefile
-cp rlm/rlm_test.c $RPM_BUILD_ROOT/@LOCAL_PREFIX@/src/rlm/
-cp rlm/rlm_serial.c $RPM_BUILD_ROOT/@LOCAL_PREFIX@/src/rlm/
-cp rlm/rlm_udp.c $RPM_BUILD_ROOT/@LOCAL_PREFIX@/src/rlm/
-cp rlm/rlm_twitter.c $RPM_BUILD_ROOT/@LOCAL_PREFIX@/src/rlm/
-cp rlm/rlm_facebook.c $RPM_BUILD_ROOT/@LOCAL_PREFIX@/src/rlm/
-cp rlm/rlm_xmpad.c $RPM_BUILD_ROOT/@LOCAL_PREFIX@/src/rlm/
-cp rlm/rlm_ando.c $RPM_BUILD_ROOT/@LOCAL_PREFIX@/src/rlm/
-cp rlm/rlm_inno713.c $RPM_BUILD_ROOT/@LOCAL_PREFIX@/src/rlm/
-mkdir -p $RPM_BUILD_ROOT/@RD_LIB_PATH@/security
-cp pam_rd/.libs/pam_rd.so $RPM_BUILD_ROOT/@RD_LIB_PATH@/security/
+rm -f $RPM_BUILD_ROOT/lib/security/pam_rd.la
+rm -f $RPM_BUILD_ROOT/lib64/security/pam_rd.la
 
 %post
 ldconfig
@@ -293,29 +158,24 @@ rm -rf $RPM_BUILD_ROOT
 @LOCAL_PREFIX@/bin/rd_audio_sync
 @LOCAL_PREFIX@/bin/rd_config
 %attr(4755,root,root)@LOCAL_PREFIX@/bin/ripcd
-@LOCAL_PREFIX@/bin/ripcd
 @LOCAL_PREFIX@/bin/toolame
+@LOCAL_PREFIX@/bin/rd_backup
+@LOCAL_PREFIX@/bin/rdalsaconfig-root
+@LOCAL_PREFIX@/bin/rdchunk
+@LOCAL_PREFIX@/bin/rdhpiinfo-root
 @LOCAL_PREFIX@/sbin/sas_shim
 @LOCAL_PREFIX@/sbin/rddbcheck
-@LOCAL_PREFIX@/share/srlabs/librd_es.qm
-@LOCAL_PREFIX@/share/srlabs/rdadmin_es.qm
-@LOCAL_PREFIX@/share/srlabs/rdairplay_es.qm
-@LOCAL_PREFIX@/share/srlabs/rdpanel_es.qm
-@LOCAL_PREFIX@/share/srlabs/rdcatch_es.qm
-@LOCAL_PREFIX@/share/srlabs/rdlibrary_es.qm
-@LOCAL_PREFIX@/share/srlabs/rdlogedit_es.qm
-@LOCAL_PREFIX@/share/srlabs/rdlogin_es.qm
-@LOCAL_PREFIX@/share/srlabs/rdlogmanager_es.qm
-@LOCAL_PREFIX@/share/srlabs/rdgpimon_es.qm
-@LOCAL_PREFIX@/share/srlabs/rmlsend_es.qm
+@LOCAL_PREFIX@/share/rivendell/*
+@LOCAL_PREFIX@/share/X11/fvwm2/pixmaps/mini.rivendell.xpm
+@LOCAL_PREFIX@/share/X11/fvwm2/pixmaps/rivendell.xpm
 /etc/init.d/rivendell
 %config /etc/sysconfig/rivendell
-/usr/share/icons/hicolor/16x16/apps/rivendell.xpm
-/usr/share/icons/hicolor/22x22/apps/rivendell.xpm
-/usr/share/icons/hicolor/32x32/apps/rivendell.xpm
-/usr/share/icons/hicolor/48x48/apps/rivendell.xpm
-/usr/share/icons/hicolor/64x64/apps/rivendell.xpm
-/usr/share/icons/hicolor/128x128/apps/rivendell.xpm
+/usr/share/icons/hicolor/16x16/apps/rivendell.png
+/usr/share/icons/hicolor/22x22/apps/rivendell.png
+/usr/share/icons/hicolor/32x32/apps/rivendell.png
+/usr/share/icons/hicolor/48x48/apps/rivendell.png
+/usr/share/icons/hicolor/64x64/apps/rivendell.png
+/usr/share/icons/hicolor/128x128/apps/rivendell.png
 /usr/share/applications/rivendell-rdadmin.desktop
 /usr/share/applications/rivendell-rdairplay.desktop
 /usr/share/applications/rivendell-rdpanel.desktop
@@ -329,6 +189,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/share/applications/rivendell-rdcastmanager.desktop
 /usr/share/applications/rivendell-rmlsend.desktop
 /usr/share/applications/rivendell-rdsoftkeys.desktop
+/usr/share/applications/rivendell-rdlogin.desktop
 /usr/share/desktop-directories/rivendell-configuration.directory
 /usr/share/desktop-directories/rivendell-logtools.directory
 /usr/share/desktop-directories/rivendell-rivendell.directory
@@ -407,12 +268,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/scheduler_formats.ods
 %doc scripts/rd_backup
 %doc scripts/start_traverso.sh
-%doc icons/rivendell-16x16.xpm
-%doc icons/rivendell-22x22.xpm
-%doc icons/rivendell-32x32.xpm
-%doc icons/rivendell-48x48.xpm
-%doc icons/rivendell-64x64.xpm
-%doc icons/rivendell-128x128.xpm
 
 
 %files importers
@@ -451,6 +306,9 @@ rm -rf $RPM_BUILD_ROOT
 @LOCAL_PREFIX@/src/rlm/rlm_inno713.c
 
 %changelog
+* Fri Feb 17 2017 Fred Gleason <fredg@paravelsystems.com>
+-- Modified to use 'make install'.
+-- Updated icons to PNG format.
 * Thu May 26 2016 Fred Gleason <fredg@paravelsystems.com>
 -- Removed 'rivendel-rdlogin.desktop'.
 * Mon May 16 2016 Fred Gleason <fredg@paravelsystems.com>

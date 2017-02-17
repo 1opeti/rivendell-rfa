@@ -23,6 +23,12 @@
 ##
 ## Use automake to process this into a Makefile.in
 
+install-exec-local:	
+	mkdir -p $(DESTDIR)/etc/httpd/conf.d
+	cp rd-bin.conf $(DESTDIR)/etc/httpd/conf.d/
+
+uninstall-local:	
+	rm -f $(DESTDIR)/etc/httpd/conf.d/rd-bin.conf
 
 EXTRA_DIST = rd.conf-sample rd.conf-complete-sample rd.conf-slax\
              my.cnf-master my.cnf-standby rd-sample.ini rd-bin.conf.in\
