@@ -113,14 +113,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-@LOCAL_PREFIX@/@RD_LIB_PATH@/librd-@VERSION@.so
+@HPI_FILE1@
 @LOCAL_PREFIX@/@RD_LIB_PATH@/librd.a
 @LOCAL_PREFIX@/@RD_LIB_PATH@/librd.la
 @LOCAL_PREFIX@/@RD_LIB_PATH@/librd.so
-@LOCAL_PREFIX@/@RD_LIB_PATH@/librdhpi-@VERSION@.so
-@LOCAL_PREFIX@/@RD_LIB_PATH@/librdhpi.a
-@LOCAL_PREFIX@/@RD_LIB_PATH@/librdhpi.la
-@LOCAL_PREFIX@/@RD_LIB_PATH@/librdhpi.so
+@LOCAL_PREFIX@/@RD_LIB_PATH@/librd-@VERSION@.so
+@HPI_FILE2@
+@HPI_FILE3@
+@HPI_FILE4@
 @LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell/rlm_test.rlm
 @LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell/rlm_serial.rlm
 @LOCAL_PREFIX@/@RD_LIB_PATH@/rivendell/rlm_udp.rlm
@@ -144,7 +144,7 @@ rm -rf $RPM_BUILD_ROOT
 @LOCAL_PREFIX@/bin/rmlsend
 @LOCAL_PREFIX@/bin/rdsoftkeys
 @LOCAL_PREFIX@/bin/rdpopup
-@LOCAL_PREFIX@/bin/rdhpiinfo
+@HPI_FILE5@
 @LOCAL_PREFIX@/bin/rdalsaconfig
 @LOCAL_PREFIX@/bin/rdgpimon
 @LOCAL_PREFIX@/bin/rdfilewrite
@@ -162,7 +162,7 @@ rm -rf $RPM_BUILD_ROOT
 @LOCAL_PREFIX@/bin/rd_backup
 @LOCAL_PREFIX@/bin/rdalsaconfig-root
 @LOCAL_PREFIX@/bin/rdchunk
-@LOCAL_PREFIX@/bin/rdhpiinfo-root
+@HPI_FILE6@
 @LOCAL_PREFIX@/sbin/sas_shim
 @LOCAL_PREFIX@/sbin/rddbcheck
 @LOCAL_PREFIX@/share/rivendell/*
@@ -181,7 +181,7 @@ rm -rf $RPM_BUILD_ROOT
 /usr/share/applications/rivendell-rdpanel.desktop
 /usr/share/applications/rivendell-rdcatch.desktop
 /usr/share/applications/rivendell-rdgpimon.desktop
-/usr/share/applications/rivendell-rdhpiinfo-root.desktop
+@HPI_FILE13@
 /usr/share/applications/rivendell-rdalsaconfig-root.desktop
 /usr/share/applications/rivendell-rdlibrary.desktop
 /usr/share/applications/rivendell-rdlogedit.desktop
@@ -195,9 +195,9 @@ rm -rf $RPM_BUILD_ROOT
 /usr/share/desktop-directories/rivendell-rivendell.directory
 /usr/share/desktop-directories/rivendell-utilities.directory
 /etc/pam.d/rdalsaconfig-root
-/etc/pam.d/rdhpiinfo-root
+@HPI_FILE14@
 /etc/security/console.apps/rdalsaconfig-root
-/etc/security/console.apps/rdhpiinfo-root
+@HPI_FILE15@
 /etc/xdg/menus/applications-merged/rivendell-rivendell.menu
 /@RD_LIB_PATH@/security/pam_rd.so
 /.qt/qt

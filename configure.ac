@@ -86,6 +86,13 @@ fi
 AR_GCC_TARGET()
 AC_SUBST(VENDOR,$ar_gcc_distro)
 AC_SUBST(ARCH,$ar_gcc_arch)
+if test $ar_gcc_arch = x86_64 ; then
+  LIB_PATH=$LOCAL_PREFIX/lib64
+  AC_SUBST(RD_LIB_PATH,lib64)
+else
+  LIB_PATH=$LOCAL_PREFIX/lib
+  AC_SUBST(RD_LIB_PATH,lib)
+fi
 
 #
 # Determine Distro
@@ -143,11 +150,42 @@ if test $HPI_FOUND ; then
     AC_DEFINE(HPI,yes)
     AC_SUBST(LIBHPI,"-lrdhpi -lhpi")
     USING_HPI=yes
+    AC_SUBST(HPI_FILE1,$LIB_PATH/librdhpi-$VERSION.so)
+    AC_SUBST(HPI_FILE2,$LIB_PATH/librdhpi.a)
+    AC_SUBST(HPI_FILE3,$LIB_PATH/librdhpi.la)
+    AC_SUBST(HPI_FILE4,$LIB_PATH/librdhpi.so)
+    AC_SUBST(HPI_FILE5,$LOCAL_PREFIX/bin/rdhpiinfo)
+    if test $ar_gcc_distro = suse ; then
+      AC_SUBST(HPI_FILE6,"")
+    else
+      AC_SUBST(HPI_FILE6,$LOCAL_PREFIX/bin/rdhpiinfo-root)
+    fi
+    AC_SUBST(HPI_FILE13,$LOCAL_PREFIX/share/applications/rivendell-rdhpiinfo-root.desktop)
+    AC_SUBST(HPI_FILE14,/etc/pam.d/rdhpiinfo-root)
+    AC_SUBST(HPI_FILE15,/etc/security/console.apps/rdhpiinfo-root)
   else 
     AC_SUBST(LIBHPI,"")
+    AC_SUBST(HPI_FILE1,"")
+    AC_SUBST(HPI_FILE2,"")
+    AC_SUBST(HPI_FILE3,"")
+    AC_SUBST(HPI_FILE4,"")
+    AC_SUBST(HPI_FILE5,"")
+    AC_SUBST(HPI_FILE6,"")
+    AC_SUBST(HPI_FILE13,"")
+    AC_SUBST(HPI_FILE14,"")
+    AC_SUBST(HPI_FILE15,"")
   fi
 else
   AC_SUBST(LIBHPI,"")
+  AC_SUBST(HPI_FILE1,"")
+  AC_SUBST(HPI_FILE2,"")
+  AC_SUBST(HPI_FILE3,"")
+  AC_SUBST(HPI_FILE4,"")
+  AC_SUBST(HPI_FILE5,"")
+  AC_SUBST(HPI_FILE6,"")
+  AC_SUBST(HPI_FILE13,"")
+  AC_SUBST(HPI_FILE14,"")
+  AC_SUBST(HPI_FILE15,"")
 fi
 AM_CONDITIONAL([HPI_RD_AM], [test "$USING_HPI" = yes])
 
